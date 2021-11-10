@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1057390847376",
+    "project_id": "knee-must",
+    "storage_bucket": "knee-must.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1057390847376:android:654156e6ad5c7f2b197f15",
+        "android_client_info": {
+          "package_name": "com.example.knee_must"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1057390847376-lmjnt3pdov2sq191ior44gkcdl268tqs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkAo8PQPs-tLeu52BHpJA0flQdqJYtIg8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1057390847376-lmjnt3pdov2sq191ior44gkcdl268tqs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
