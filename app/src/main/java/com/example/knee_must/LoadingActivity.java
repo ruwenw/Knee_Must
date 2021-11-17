@@ -51,7 +51,7 @@ public class LoadingActivity extends AppCompatActivity {
                 ArrayList<Patient> fbPatients = dataSnapshot.getValue(t);
                 DataModel.patients.clear();
                 DataModel.patients.addAll(fbPatients);
-                Intent intent =new Intent(getApplicationContext() ,MainActivity.class);
+                Intent intent =new Intent(getApplicationContext() ,LoginActivity.class);
                 startActivityForResult(intent,0);
             }
 

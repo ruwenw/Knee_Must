@@ -13,45 +13,56 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 EditText username;
 EditText password;
 Button btnlogin;
+Button btntoregister;
+SharedPreference sharedPref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         username=findViewById(R.id.etuname);
         password=findViewById(R.id.etpassw);
+        sharedPref = new SharedPreference(this);
         btnlogin.setOnClickListener(this);
+        btntoregister.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View view) {
         boolean found = false;
-
-        for (int i=0; i<DataModel.doctors.size(); i++)
+        if(view==btnlogin)
         {
-            if (DataModel.doctors.get(i).getUsername().equals(username))
-            {
-                DataModel.doctor = DataModel.doctors.get(i);
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivityForResult(intent, 0);
-                found = true;
+            for (int i=0; i<DataModel.doctors.size(); i++) {
+                if (DataModel.doctors.get(i).getUsername().equals(username) && DataModel.doctors.get(i).getPassword().equals(password)) {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                    found = true;
+                    sharedPref.SetUsername(DataModel.doctors.get(i).getUsername());
+                }
+                if (!found) {
+                    for (int j = 0; j < DataModel.patients.size(); j++) {
+                        if (DataModel.patients.get(j).getUsername().equals(username) && DataModel.patients.get(j).getPassword().equals(password)) {
+                            Intent intent = new Intent(this, MainActivity.class);
+                            startActivity(intent);
+                            sharedPref.SetUsername(DataModel.patients.get(j).getUsername());
+                            found = true;
+                        }
+                    }
+                }
+                if (!found) {
+                    Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
+                }
             }
         }
-        for (int i=0; i<DataModel.patients.size(); i++)
-        {
-            if (DataModel.patients.get(i).getUsername().equals(username))
-            {
-                DataModel.patient = DataModel.patients.get(i);
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivityForResult(intent, 0);
-                found = true;
-                
-            }
+        if(view==btntoregister){
+            Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
+        }
         }
 
-        if (!found)
-        {
-            Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
-        }
+
+
 
     }
 }
