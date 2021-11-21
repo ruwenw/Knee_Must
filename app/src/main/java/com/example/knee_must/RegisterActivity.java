@@ -34,7 +34,7 @@ SharedPreference sharedPref;
         isdoctor.setOnClickListener(this);
         submit=findViewById(R.id.btnsubmit);
         submit.setOnClickListener(this);
-
+//hiygkuftjy
 
 
 
