@@ -3,6 +3,8 @@ package com.example.knee_must;
 import java.util.ArrayList;
 
 public class Patient {
+    private String fname;
+    private String lname;
     private String username;
     private String password;
     private String id;
@@ -11,11 +13,13 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(String username, String password, String id, ArrayList<Integer> exercises) {
+    public Patient(String username, String password, String id, ArrayList<Integer> exercises,String fname,String lname) {
         this.username = username;
         this.password = password;
         this.id = id;
         this.exercises = exercises;
+        this.fname=fname;
+        this.lname=lname;
     }
 
     public String getUsername() {

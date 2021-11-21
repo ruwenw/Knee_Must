@@ -22,6 +22,8 @@ SharedPreference sharedPref;
         setContentView(R.layout.activity_login);
         username=findViewById(R.id.etuname);
         password=findViewById(R.id.etpassw);
+        btnlogin=findViewById(R.id.btnlogin);
+        btntoregister=findViewById(R.id.btntoregister);
         sharedPref = new SharedPreference(this);
         btnlogin.setOnClickListener(this);
         btntoregister.setOnClickListener(this);
@@ -59,10 +61,7 @@ SharedPreference sharedPref;
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
         }
-        }
-
-
-
 
     }
 }
+

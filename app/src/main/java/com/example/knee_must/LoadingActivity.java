@@ -25,7 +25,7 @@ public class LoadingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
-        database = FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance("https://knee-must-default-rtdb.europe-west1.firebasedatabase.app/");
         dbDoctorsRef=database.getReference("doctor");
         dbPatientsRef=database.getReference("patients");
         dbDoctorsRef.addValueEventListener(new ValueEventListener() {

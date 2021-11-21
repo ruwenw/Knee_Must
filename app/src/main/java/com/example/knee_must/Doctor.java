@@ -5,15 +5,19 @@ import java.util.ArrayList;
 public class Doctor {
     private String username;
     private String password;
+    private String fname;
+    private String lname;
     private ArrayList<Integer> patients;
 
     public Doctor() {
     }
 
-    public Doctor(String username, String password, ArrayList<Integer> patients) {
+    public Doctor(String username, String password, ArrayList<Integer> patients,String fname,String lname) {
         this.username = username;
         this.password = password;
         this.patients = patients;
+        this.fname=fname;
+        this.lname=lname;
     }
  
     public String getUsername() {
