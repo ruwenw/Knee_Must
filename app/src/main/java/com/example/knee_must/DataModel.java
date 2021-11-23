@@ -9,9 +9,9 @@ public class DataModel {
     static public ArrayList<Patient> patients = new ArrayList<>();
 
     public static void saveDoctors() {
-        FirebaseDatabase.getInstance().getReference("doctor").setValue(DataModel.doctors);
+        FirebaseDatabase.getInstance("https://knee-must-default-rtdb.europe-west1.firebasedatabase.app/").getReference("doctor").setValue(DataModel.doctors);
     }
     public static void savePatients() {
-        FirebaseDatabase.getInstance().getReference("patients").setValue(DataModel.patients);
+        FirebaseDatabase.getInstance("https://knee-must-default-rtdb.europe-west1.firebasedatabase.app/").getReference("patients").setValue(DataModel.patients);
     }
 }

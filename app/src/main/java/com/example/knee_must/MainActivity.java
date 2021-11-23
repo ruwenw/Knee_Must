@@ -29,7 +29,7 @@ SharedPreference sharedPref;
         }
 
         MenuItem item;
-        item = menu.getItem(4);
+        item = menu.getItem(3);
         item.setEnabled(false);
         item.setVisible(false);
 
@@ -38,9 +38,6 @@ SharedPreference sharedPref;
             item.setEnabled(false);
             item.setVisible(false);
 
-            item = menu.getItem(3);
-            item.setEnabled(false);
-            item.setVisible(false);
 
         } else {
 

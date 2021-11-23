@@ -36,7 +36,7 @@ SharedPreference sharedPref;
         if(view==btnlogin)
         {
             for (int i=0; i<DataModel.doctors.size(); i++) {
-                if (DataModel.doctors.get(i).getUsername().equals(username) && DataModel.doctors.get(i).getPassword().equals(password)) {
+                if (DataModel.doctors.get(i).getUsername().equals(username.getText().toString()) && DataModel.doctors.get(i).getPassword().equals(password.getText().toString())) {
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                     found = true;
@@ -44,7 +44,7 @@ SharedPreference sharedPref;
                 }
                 if (!found) {
                     for (int j = 0; j < DataModel.patients.size(); j++) {
-                        if (DataModel.patients.get(j).getUsername().equals(username) && DataModel.patients.get(j).getPassword().equals(password)) {
+                        if (DataModel.patients.get(j).getUsername().equals(username.getText().toString()) && DataModel.patients.get(j).getPassword().equals(password.getText().toString())) {
                             Intent intent = new Intent(this, MainActivity.class);
                             startActivity(intent);
                             sharedPref.SetUsername(DataModel.patients.get(j).getUsername());
