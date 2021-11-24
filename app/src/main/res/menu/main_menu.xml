@@ -4,7 +4,7 @@
 
         <item
             android:id="@+id/username"
-            android:title="YouRGuest"
+            android:title="Name"
             android:orderInCategory="100"
             />
         <item
@@ -21,7 +21,12 @@
         <item
             android:id="@+id/action_GoHome"
             android:title="Home"
-            android:orderInCategory="500"
+            android:orderInCategory="400"
             />
+        <item
+                android:id="@+id/action_logout"
+                android:title="Logout"
+                android:orderInCategory="500"/>
+
 
 </menu>

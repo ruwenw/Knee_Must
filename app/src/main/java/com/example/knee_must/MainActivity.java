@@ -12,12 +12,15 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 SharedPreference sharedPref;
+    AlertDialog.Builder builder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPref = new SharedPreference(this);
+        builder = new AlertDialog.Builder(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -29,7 +32,7 @@ SharedPreference sharedPref;
         }
 
         MenuItem item;
-        item = menu.getItem(3);
+        item = menu.getItem(0);
         item.setEnabled(false);
         item.setVisible(false);
 
@@ -38,8 +41,8 @@ SharedPreference sharedPref;
             item.setEnabled(false);
             item.setVisible(false);
 
-
-        } else {
+        }
+        else {
 
             item = menu.getItem(1);
             item.setEnabled(false);
@@ -54,6 +57,34 @@ SharedPreference sharedPref;
         }
         return true;
     }
+    */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+
+        for(int i=0;i<menu.size();i++)
+        {
+            MenuItem item= menu.getItem(i);
+            item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
+        MenuItem item;
+        item = menu.getItem(3);
+        item.setEnabled(false);
+        item.setVisible(false);
+
+        if (sharedPref.GetUsername().equals("")) {
+            item = menu.getItem(0);
+            item.setEnabled(false);
+            item.setVisible(false);
+        }
+        item = menu.getItem(0);
+        item.setTitle(sharedPref.GetUsername());
+
+        return true;
+
+    }
+//*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -68,7 +99,7 @@ SharedPreference sharedPref;
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivityForResult(intent, 0);
             return true;
-        /*} else if (id == R.id.action_exit) {
+        } else if (id == R.id.action_logout) {
             builder.setMessage("Do you want to logout?")
                     .setCancelable(false)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -77,7 +108,10 @@ SharedPreference sharedPref;
                             sharedPref.SetUsername("YouRGuest");
                             Toast.makeText(getApplicationContext(), "You logged out",
                                     Toast.LENGTH_SHORT).show();
-                            restartapp();
+                            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(i);
+                            sharedPref.Clear();
+                            finish();
                         }
                     })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -90,8 +124,9 @@ SharedPreference sharedPref;
                     });
             AlertDialog alert = builder.create();
             alert.setTitle("Logout");
-            alert.show();*/
+            alert.show();
         }
         return true;
     }
+
 }

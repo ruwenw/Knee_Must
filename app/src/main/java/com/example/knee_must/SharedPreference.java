@@ -12,11 +12,30 @@ public class SharedPreference {
     public void SetUsername(String username) {
         SharedPreferences.Editor editor = mySharedPrefrences.edit();
         editor.putString("username", username);
+
         editor.commit();
+    }
+    public void SetIsLogedIn(boolean islogedin)
+    {
+        SharedPreferences.Editor editor= mySharedPrefrences.edit();
+        editor.putBoolean("islogedin",islogedin);
+        editor.commit();
+    }
+    public void Clear()
+    {
+        SharedPreferences.Editor editor = mySharedPrefrences.edit();
+        editor.clear();
+        editor.commit();
+    }
+    public boolean IsLogedIN()
+    {
+        boolean is=mySharedPrefrences.getBoolean("islogedin",false);
+        return is;
+
     }
 
     public String GetUsername() {
-        String user = mySharedPrefrences.getString("username", "YouRGuest");
+        String user = mySharedPrefrences.getString("username","");
         return user;
     }
 }
