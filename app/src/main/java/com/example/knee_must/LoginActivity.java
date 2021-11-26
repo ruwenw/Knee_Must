@@ -2,6 +2,8 @@ package com.example.knee_must;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,11 +19,13 @@ EditText password;
 Button btnlogin;
 Button btntoregister;
 SharedPreference sharedPref;
+    AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        builder = new AlertDialog.Builder(this);
         username=findViewById(R.id.etuname);
         password=findViewById(R.id.etpassw);
         btnlogin=findViewById(R.id.btnlogin);
@@ -43,6 +47,7 @@ SharedPreference sharedPref;
                     startActivity(intent);
                     found = true;
                     sharedPref.SetUsername(DataModel.doctors.get(i).getUsername());
+                    sharedPref.SetFname(DataModel.doctors.get(i).getFname());
                     sharedPref.SetIsLogedIn(true);
                 }
                 if (!found) {
@@ -51,6 +56,7 @@ SharedPreference sharedPref;
                             Intent intent = new Intent(this, MainActivity.class);
                             startActivity(intent);
                             sharedPref.SetUsername(DataModel.patients.get(j).getUsername());
+                            sharedPref.SetFname(DataModel.patients.get(j).getFname());
                             sharedPref.SetIsLogedIn(true);
                             found = true;
                         }
@@ -78,13 +84,11 @@ SharedPreference sharedPref;
         }
 
         MenuItem item;
-        item = menu.getItem(4);
-        item.setEnabled(false);
-        item.setVisible(false);
+
         item = menu.getItem(1);
         item.setEnabled(false);
         item.setVisible(false);
-        if (sharedPref.GetUsername().equals("")) {
+        if (sharedPref.GetFname().equals("")) {
             item = menu.getItem(0);
             item.setEnabled(false);
             item.setVisible(false);
@@ -92,7 +96,7 @@ SharedPreference sharedPref;
         }
         else {
             item = menu.getItem(0);
-            item.setTitle(sharedPref.GetUsername());
+            item.setTitle(sharedPref.GetFname());
         }
         return true;
     }
@@ -119,6 +123,32 @@ SharedPreference sharedPref;
             }
             //finish();
             return true;
+        } else if (id == R.id.action_logout) {
+            builder.setMessage("Do you want to logout?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            sharedPref.SetFname("");
+                            sharedPref.SetUsername("");
+                            sharedPref.Clear();
+                            Toast.makeText(getApplicationContext(), "You logged out",
+                                    Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(i);
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //  Action for 'NO' Button
+                            dialog.cancel();
+                            Toast.makeText(getApplicationContext(), "You canceled the logout",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.setTitle("Logout");
+            alert.show();
         }
         return true;
 

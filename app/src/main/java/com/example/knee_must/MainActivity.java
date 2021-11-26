@@ -73,13 +73,13 @@ SharedPreference sharedPref;
         item.setEnabled(false);
         item.setVisible(false);
 
-        if (sharedPref.GetUsername().equals("")) {
+        if (sharedPref.GetFname().equals("")) {
             item = menu.getItem(0);
             item.setEnabled(false);
             item.setVisible(false);
         }
         item = menu.getItem(0);
-        item.setTitle(sharedPref.GetUsername());
+        item.setTitle(sharedPref.GetFname());
 
         return true;
 
@@ -104,13 +104,13 @@ SharedPreference sharedPref;
                     .setCancelable(false)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            finish();
-                            sharedPref.SetUsername("YouRGuest");
+                            sharedPref.SetFname("");
+                            sharedPref.SetUsername("");
+                            sharedPref.Clear();
                             Toast.makeText(getApplicationContext(), "You logged out",
                                     Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(i);
-                            sharedPref.Clear();
                             finish();
                         }
                     })

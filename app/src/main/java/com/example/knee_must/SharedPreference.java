@@ -12,7 +12,6 @@ public class SharedPreference {
     public void SetUsername(String username) {
         SharedPreferences.Editor editor = mySharedPrefrences.edit();
         editor.putString("username", username);
-
         editor.commit();
     }
     public void SetIsLogedIn(boolean islogedin)
@@ -20,6 +19,15 @@ public class SharedPreference {
         SharedPreferences.Editor editor= mySharedPrefrences.edit();
         editor.putBoolean("islogedin",islogedin);
         editor.commit();
+    }
+    public void SetFname(String fname) {
+        SharedPreferences.Editor editor = mySharedPrefrences.edit();
+        editor.putString("fname", fname);
+        editor.commit();
+    }
+    public String GetFname() {
+        String fName = mySharedPrefrences.getString("fname","");
+        return fName;
     }
     public void Clear()
     {
