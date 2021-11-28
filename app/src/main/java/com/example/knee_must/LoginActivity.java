@@ -33,7 +33,11 @@ SharedPreference sharedPref;
         sharedPref = new SharedPreference(this);
         btnlogin.setOnClickListener(this);
         btntoregister.setOnClickListener(this);
-
+        if(sharedPref.IsLogedIN())
+        {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -86,6 +90,9 @@ SharedPreference sharedPref;
         MenuItem item;
 
         item = menu.getItem(1);
+        item.setEnabled(false);
+        item.setVisible(false);
+        item = menu.getItem(4);
         item.setEnabled(false);
         item.setVisible(false);
         if (sharedPref.GetFname().equals("")) {

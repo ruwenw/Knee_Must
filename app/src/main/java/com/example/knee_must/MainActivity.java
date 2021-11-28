@@ -8,56 +8,34 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 SharedPreference sharedPref;
     AlertDialog.Builder builder;
+    Button toexer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPref = new SharedPreference(this);
         builder = new AlertDialog.Builder(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        toexer=findViewById(R.id.toExercises);
+        toexer.setOnClickListener(this);
     }
-    /*
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-
-        for (int i = 0; i < menu.size(); i++) {
-            MenuItem item = menu.getItem(i);
-            item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    public void onClick(View view) {
+        if(view==toexer)
+        {
+            Intent intent = new Intent(this, ExercisesListActivity.class);
+            startActivity(intent);
         }
 
-        MenuItem item;
-        item = menu.getItem(0);
-        item.setEnabled(false);
-        item.setVisible(false);
 
-        if (sharedPref.GetUsername().equals("YouRGuest")) {
-            item = menu.getItem(0);
-            item.setEnabled(false);
-            item.setVisible(false);
-
-        }
-        else {
-
-            item = menu.getItem(1);
-            item.setEnabled(false);
-            item.setVisible(false);
-
-            item = menu.getItem(2);
-            item.setEnabled(false);
-            item.setVisible(false);
-
-            item = menu.getItem(0);
-            item.setTitle(sharedPref.GetUsername());
-        }
-        return true;
     }
-    */
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -70,6 +48,12 @@ SharedPreference sharedPref;
         }
         MenuItem item;
         item = menu.getItem(3);
+        item.setEnabled(false);
+        item.setVisible(false);
+        item = menu.getItem(1);
+        item.setEnabled(false);
+        item.setVisible(false);
+        item = menu.getItem(2);
         item.setEnabled(false);
         item.setVisible(false);
 
@@ -91,9 +75,9 @@ SharedPreference sharedPref;
         int id = item.getItemId();
 
         if (id == R.id.action_login) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivityForResult(intent, 0);
-            //Toast.makeText(this,"you selected login",Toast.LENGTH_LONG).show();
+            //Intent intent = new Intent(this, LoginActivity.class);
+            //startActivityForResult(intent, 0);
+            Toast.makeText(this,"You are already loged in",Toast.LENGTH_LONG).show();
             return true;
         } else if (id == R.id.action_register) {
             Intent intent = new Intent(this, RegisterActivity.class);
@@ -128,5 +112,6 @@ SharedPreference sharedPref;
         }
         return true;
     }
+
 
 }

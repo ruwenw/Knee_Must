@@ -20,6 +20,7 @@ public class LoadingActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference dbDoctorsRef;
     DatabaseReference dbPatientsRef;
+    DatabaseReference dbExercisesRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,8 @@ public class LoadingActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance("https://knee-must-default-rtdb.europe-west1.firebasedatabase.app/");
         dbDoctorsRef=database.getReference("doctor");
         dbPatientsRef=database.getReference("patients");
+        dbExercisesRef=database.getReference("exercises");
+
         dbDoctorsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -53,6 +56,21 @@ public class LoadingActivity extends AppCompatActivity {
                 DataModel.patients.addAll(fbPatients);
                 Intent intent =new Intent(getApplicationContext() ,LoginActivity.class);
                 startActivityForResult(intent,0);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        dbDoctorsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<ArrayList<Exercise>> t=new GenericTypeIndicator<ArrayList<Exercise>>() {
+                };
+                ArrayList<Exercise> fbExercise = dataSnapshot.getValue(t);
+                DataModel.exercises.clear();
+                DataModel.exercises.addAll(fbExercise);
             }
 
             @Override
