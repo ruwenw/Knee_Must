@@ -10,18 +10,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 SharedPreference sharedPref;
     AlertDialog.Builder builder;
     Button toexer;
+    TextView test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPref = new SharedPreference(this);
         builder = new AlertDialog.Builder(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //test=findViewById(R.id.test);
+        //test.setText("2314");
         toexer=findViewById(R.id.toExercises);
         toexer.setOnClickListener(this);
     }

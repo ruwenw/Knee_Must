@@ -9,6 +9,10 @@
     tools:context=".MainActivity">
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/test"/>
     <Button
         android:layout_width="370dp"
         android:layout_height="150dp"
@@ -17,6 +21,7 @@
         android:id="@+id/toExercises"
         android:text="Daily Exercises"
         android:textSize="35dp"
+        android:textColor="@color/purple_500"
         android:backgroundTint="@color/black"
         />
     <Button
@@ -27,6 +32,7 @@
         android:id="@+id/toFeedback"
         android:text="Tracking and FeedBack"
         android:textSize="35dp"
+        android:textColor="@color/purple_500"
         android:backgroundTint="@color/black"
         />
 
