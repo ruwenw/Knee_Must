@@ -27,7 +27,7 @@ public class MyListAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.mylistadapter, null, true);
 
-        TextView titleText = (TextView) rowView.findViewById(R.id.title);
+        TextView titleText = rowView.findViewById(R.id.title);
 
         titleText.setText(maintitle.get(position));
 

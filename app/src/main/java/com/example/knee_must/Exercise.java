@@ -1,6 +1,7 @@
 package com.example.knee_must;
 
-public class Exercise {
+public class
+Exercise {
     private String name;
     private String description;
 

@@ -12,7 +12,7 @@ import android.widget.ListView;
 import java.util.AbstractSet;
 import java.util.ArrayList;
 
-public class ExercisesListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class  ExercisesListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     ListView lvexr;
     ArrayList<String> aryexlist;
     MyListAdapter adapter;
@@ -25,10 +25,8 @@ public class ExercisesListActivity extends AppCompatActivity implements AdapterV
         for (int i = 0 ; i < DataModel.exercises.size();i++)
         {
             temp.add(DataModel.exercises.get(i).getName());
-
-
         }
-        temp.add("Exercise 1");
+
         adapter=new MyListAdapter(this,temp);
         lvexr = findViewById(R.id.lvex);
 

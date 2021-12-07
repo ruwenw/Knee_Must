@@ -63,7 +63,7 @@ public class LoadingActivity extends AppCompatActivity {
 
             }
         });
-        dbDoctorsRef.addValueEventListener(new ValueEventListener() {
+        dbExercisesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<ArrayList<Exercise>> t=new GenericTypeIndicator<ArrayList<Exercise>>() {
