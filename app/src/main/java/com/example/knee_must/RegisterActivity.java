@@ -113,7 +113,7 @@ SharedPreference sharedPref;
 
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
-            item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
         }
         MenuItem item;
         item = menu.getItem(2);
@@ -146,6 +146,10 @@ SharedPreference sharedPref;
             //Toast.makeText(this,"you selected login",Toast.LENGTH_LONG).show();
             return true;
 
+        }else if (id == R.id.action_Delete) {
+            Intent intent = new Intent(this, DeleteActivity.class);
+            startActivityForResult(intent, 0);
+            return true;
         } else if (id == R.id.action_GoHome) {
             if(sharedPref.IsLogedIN()){
                 Intent intent = new Intent(this, MainActivity.class);

@@ -36,9 +36,11 @@ public class ExerciseActivity extends AppCompatActivity {
         for(int i=0;i<menu.size();i++)
         {
             MenuItem item= menu.getItem(i);
-            item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
         }
         MenuItem item;
+        item = menu.getItem(0);
+        item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
         item = menu.getItem(3);
         item.setEnabled(false);
         item.setVisible(false);
@@ -46,6 +48,9 @@ public class ExerciseActivity extends AppCompatActivity {
         item.setEnabled(false);
         item.setVisible(false);
         item = menu.getItem(2);
+        item.setEnabled(false);
+        item.setVisible(false);
+        item = menu.getItem(5);
         item.setEnabled(false);
         item.setVisible(false);
 

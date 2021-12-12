@@ -27,6 +27,10 @@
                 android:id="@+id/action_logout"
                 android:title="Logout"
                 android:orderInCategory="500"/>
+        <item
+            android:id="@+id/action_Delete"
+            android:title="Delete User"
+            android:orderInCategory="600"/>
 
 
 </menu>

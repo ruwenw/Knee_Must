@@ -13,58 +13,48 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-EditText username;
-EditText password;
-Button btnlogin;
-Button btntodelete;
-Button btntoregister;
-SharedPreference sharedPref;
-    AlertDialog.Builder builder;
+public class DeleteActivity extends AppCompatActivity implements View.OnClickListener{
+    EditText username;
+    EditText password;
+    Button btndelete;
 
+    SharedPreference sharedPref;
+    AlertDialog.Builder builder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_delete);
         builder = new AlertDialog.Builder(this);
         username=findViewById(R.id.etuname);
         password=findViewById(R.id.etpassw);
-        btnlogin=findViewById(R.id.btnlogin);
-        btntoregister=findViewById(R.id.btntoregister);
-        btntodelete=findViewById(R.id.todelete);
+        btndelete=findViewById(R.id.btndelete);
+
         sharedPref = new SharedPreference(this);
-        btnlogin.setOnClickListener(this);
-        btntodelete.setOnClickListener(this);
-        btntoregister.setOnClickListener(this);
-        if(sharedPref.IsLogedIN())
-        {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        }
+        btndelete.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         boolean found = false;
-        if(view==btnlogin)
+        if(view==btndelete)
         {
             for (int i=0; i<DataModel.doctors.size(); i++) {
                 if (DataModel.doctors.get(i).getUsername().equals(username.getText().toString()) && DataModel.doctors.get(i).getPassword().equals(password.getText().toString())) {
-                    Intent intent = new Intent(this, MainActivity.class);
+                    DataModel.doctors.remove(i);
+                    DataModel.saveDoctors();
+                    Intent intent = new Intent(this, LoginActivity.class);
                     startActivity(intent);
                     found = true;
-                    sharedPref.SetUsername(DataModel.doctors.get(i).getUsername());
-                    sharedPref.SetFname(DataModel.doctors.get(i).getFname());
-                    sharedPref.SetIsLogedIn(true);
+
                 }
                 if (!found) {
                     for (int j = 0; j < DataModel.patients.size(); j++) {
                         if (DataModel.patients.get(j).getUsername().equals(username.getText().toString()) && DataModel.patients.get(j).getPassword().equals(password.getText().toString())) {
-                            Intent intent = new Intent(this, MainActivity.class);
+                            DataModel.patients.remove(j);
+                            DataModel.savePatients();
+                            Intent intent = new Intent(this, LoginActivity.class);
                             startActivity(intent);
-                            sharedPref.SetUsername(DataModel.patients.get(j).getUsername());
-                            sharedPref.SetFname(DataModel.patients.get(j).getFname());
-                            sharedPref.SetIsLogedIn(true);
+
                             found = true;
                         }
                     }
@@ -73,14 +63,6 @@ SharedPreference sharedPref;
                     Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
                 }
             }
-        }
-        if(view==btntoregister){
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivity(intent);
-        }
-        if(view==btntodelete){
-            Intent intent = new Intent(this, DeleteActivity.class);
-            startActivity(intent);
         }
 
     }
@@ -102,6 +84,10 @@ SharedPreference sharedPref;
         item = menu.getItem(4);
         item.setEnabled(false);
         item.setVisible(false);
+        item = menu.getItem(2);
+        item.setEnabled(false);
+        item.setVisible(false);
+
         item = menu.getItem(5);
         item.setEnabled(false);
         item.setVisible(false);
@@ -171,5 +157,5 @@ SharedPreference sharedPref;
         return true;
 
     }
-}
 
+}

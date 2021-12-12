@@ -48,9 +48,10 @@ SharedPreference sharedPref;
         for(int i=0;i<menu.size();i++)
         {
             MenuItem item= menu.getItem(i);
-            item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         MenuItem item;
+        item = menu.getItem(0);
+        item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
         item = menu.getItem(3);
         item.setEnabled(false);
         item.setVisible(false);
@@ -60,6 +61,7 @@ SharedPreference sharedPref;
         item = menu.getItem(2);
         item.setEnabled(false);
         item.setVisible(false);
+
 
         if (sharedPref.GetFname().equals("")) {
             item = menu.getItem(0);
@@ -87,7 +89,11 @@ SharedPreference sharedPref;
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivityForResult(intent, 0);
             return true;
-        } else if (id == R.id.action_logout) {
+        } else if (id == R.id.action_Delete) {
+            Intent intent = new Intent(this, DeleteActivity.class);
+            startActivityForResult(intent, 0);
+            return true;
+        }else if (id == R.id.action_logout) {
             builder.setMessage("Do you want to logout?")
                     .setCancelable(false)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
