@@ -3,6 +3,7 @@ package com.example.knee_must;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,11 +22,13 @@ import java.util.ArrayList;
 
 public class  ExercisesListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener ,View.OnClickListener{
     ListView lvexr;
-    Button addExer;
+    EditText exerName,exerDescription;
+    Button addExer,submitaddExer;
     ArrayList<String> aryexlist;
     MyListAdapter adapter;
     SharedPreference sharedPref;
     AlertDialog.Builder builder;
+    Dialog exerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +64,12 @@ public class  ExercisesListActivity extends AppCompatActivity implements Adapter
     public void onClick(View view) {
         if(view==addExer)
         {
-            builder.setMessage("Do you want to add Exercise?")
+            OpenAddExerDialog();
+
+            /*builder.setMessage("Do you want to add Exercise?")
                     .setCancelable(false)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            sharedPref.SetFname("");
                             sharedPref.SetUsername("");
                             sharedPref.Clear();
                             Toast.makeText(getApplicationContext(), "You logged out",
@@ -84,9 +89,55 @@ public class  ExercisesListActivity extends AppCompatActivity implements Adapter
                     });
             AlertDialog alert = builder.create();
             alert.setTitle("Logout");
-            alert.show();
+            alert.show();*/
         }
 
+    }
+    public void OpenAddExerDialog() {
+        exerDialog = new Dialog(this);
+        exerDialog.setContentView(R.layout.custom_exer_add_dialog);
+        exerDialog.setTitle("Add Exercise");
+
+        exerDialog.setCancelable(true);
+
+        exerName= exerDialog.findViewById(R.id.exerName);
+        exerDescription = exerDialog.findViewById(R.id.exerDescription);
+        submitaddExer = exerDialog.findViewById(R.id.submitaddExer);
+
+
+        submitaddExer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v ==  submitaddExer)
+                {
+                    /*if (DataModel.exercises.get(getIntent().getIntExtra("WE", 0)).getExercisesList() != null)
+                    {
+                        DataModel.muscles.get(getIntent().getIntExtra("WE", 0)).addExercise(
+                                new Exercise(nameOfExercise.getText().toString(),
+                                        sharedPref.GetUsername(),
+                                        descriptionOfExercise.getText().toString(),
+                                        null, null, null, "false"));
+                    }
+                    else
+                    {
+                        ArrayList<Exercise> temp = new ArrayList<>();
+                        temp.add(new Exercise(nameOfExercise.getText().toString(),
+                                sharedPref.GetUsername(),
+                                descriptionOfExercise.getText().toString(),
+                                null, null, null, "false"));
+                        DataModel.muscles.get(getIntent().getIntExtra("WE", 0)).setExercisesList(temp);
+                    }*/
+                    DataModel.exercises.add(
+                            new Exercise(exerName.getText().toString(),
+                                    exerDescription.getText().toString()));
+                    DataModel.saveExercieses();
+                    exerDialog.dismiss();
+                    restartapp();
+                }
+            }
+        });
+
+        exerDialog.show();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -168,6 +219,12 @@ public class  ExercisesListActivity extends AppCompatActivity implements Adapter
             alert.show();
         }
         return true;
+    }
+    void restartapp() {
+        Intent i = new Intent(getApplicationContext(), ExercisesListActivity.class);
+        //i.putExtra("WE", getIntent().getIntExtra("WE", 0));
+        startActivity(i);
+        finish();
     }
 
 
