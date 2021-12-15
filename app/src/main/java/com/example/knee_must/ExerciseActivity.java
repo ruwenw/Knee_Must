@@ -12,18 +12,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ExerciseActivity extends AppCompatActivity {
-    TextView tvexname,tvlink;
+public class ExerciseActivity extends AppCompatActivity implements IView{
+    TextView tvexname,tvlink,tvmessage;
     SharedPreference sharedPref;
     AlertDialog.Builder builder;
+    private IPrestenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPref = new SharedPreference(this);
         builder = new AlertDialog.Builder(this);
         super.onCreate(savedInstanceState);
+        this.presenter=new Presenter(this);
         setContentView(R.layout.activity_exercise);
         tvexname = findViewById(R.id.exname);
         tvlink=findViewById(R.id.tvlink);
+        tvmessage=findViewById(R.id.tvmessage);
         tvexname.setText(DataModel.exercises.get(getIntent().getIntExtra("EXSIZE",0)).getName());
         tvlink.setText(DataModel.exercises.get(getIntent().getIntExtra("EXSIZE",0)).getDescription());
 
@@ -108,5 +111,15 @@ public class ExerciseActivity extends AppCompatActivity {
             alert.show();
         }
         return true;
+    }
+
+    @Override
+    public void DatatoPtresenter(double angle) {
+        this.presenter.ViewtoModel(angle);
+    }
+
+    @Override
+    public void Displaymessage(String st) {
+        tvmessage.setText(st);
     }
 }
