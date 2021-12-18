@@ -16,7 +16,7 @@ public class Doctor extends Person {
 
     }
  
-   z
+
 
     public ArrayList<Integer> getPatients() {
         return patients;

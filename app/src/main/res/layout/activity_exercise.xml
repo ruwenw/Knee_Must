@@ -19,6 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvlink"
+        android:autoLink="web"
+        android:linksClickable="true"
         android:text="Link to video"
         android:textSize="15dp"
         android:layout_marginTop="10dp"/>
@@ -28,5 +30,14 @@
         android:id="@+id/tvmessage"
         android:textSize="30dp"
         android:layout_marginTop="20dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Exercise"
+        android:id="@+id/deleteExer"
+        android:textSize="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="150dp"/>
+
 
 </LinearLayout>

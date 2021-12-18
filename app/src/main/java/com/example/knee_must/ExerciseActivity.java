@@ -8,12 +8,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ExerciseActivity extends AppCompatActivity implements IView{
+public class ExerciseActivity extends AppCompatActivity implements IView, View.OnClickListener{
     TextView tvexname,tvlink,tvmessage;
+    Button deleteExer;
     SharedPreference sharedPref;
     AlertDialog.Builder builder;
     private IPrestenter presenter;
@@ -23,12 +26,45 @@ public class ExerciseActivity extends AppCompatActivity implements IView{
         builder = new AlertDialog.Builder(this);
         super.onCreate(savedInstanceState);
         this.presenter=new Presenter(this);
+        deleteExer=findViewById(R.id.deleteExer);
         setContentView(R.layout.activity_exercise);
         tvexname = findViewById(R.id.exname);
         tvlink=findViewById(R.id.tvlink);
         tvmessage=findViewById(R.id.tvmessage);
         tvexname.setText(DataModel.exercises.get(getIntent().getIntExtra("EXSIZE",0)).getName());
         tvlink.setText(DataModel.exercises.get(getIntent().getIntExtra("EXSIZE",0)).getDescription());
+        deleteExer.setOnClickListener(this);
+
+    }
+    @Override
+    public void onClick(View view) {
+        if(view==deleteExer)
+        {
+            builder.setMessage("Do you want to delete the Exercise?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            DataModel.exercises.remove(getIntent().getIntExtra("EXSIZE",0));
+                            DataModel.saveExercieses();
+                            Toast.makeText(getApplicationContext(), "Deleted",
+                                    Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(getApplicationContext(), ExercisesListActivity.class);
+                            startActivity(i);
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //  Action for 'NO' Button
+                            dialog.cancel();
+                            Toast.makeText(getApplicationContext(), "You canceled ",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.setTitle("Delete Exercise");
+            alert.show();
+        }
 
     }
     @Override
@@ -122,4 +158,6 @@ public class ExerciseActivity extends AppCompatActivity implements IView{
     public void Displaymessage(String st) {
         tvmessage.setText(st);
     }
+
+
 }

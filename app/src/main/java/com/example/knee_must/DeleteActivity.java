@@ -78,9 +78,7 @@ public class DeleteActivity extends AppCompatActivity implements View.OnClickLis
 
         MenuItem item;
 
-        item = menu.getItem(1);
-        item.setEnabled(false);
-        item.setVisible(false);
+
         item = menu.getItem(4);
         item.setEnabled(false);
         item.setVisible(false);
