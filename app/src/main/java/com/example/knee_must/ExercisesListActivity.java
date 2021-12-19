@@ -187,6 +187,10 @@ public class  ExercisesListActivity extends AppCompatActivity implements Adapter
             //startActivityForResult(intent, 0);
             Toast.makeText(this,"You are already loged in",Toast.LENGTH_LONG).show();
             return true;
+        } else if (id == R.id.action_Back) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivityForResult(intent, 0);
+            return true;
         } else if (id == R.id.action_register) {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivityForResult(intent, 0);

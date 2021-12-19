@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 SharedPreference sharedPref;
     AlertDialog.Builder builder;
-    Button toexer;
+    Button toexer,toFeedback;
     TextView test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,8 @@ SharedPreference sharedPref;
         //test=findViewById(R.id.test);
         //test.setText("2314");
         toexer=findViewById(R.id.toExercises);
+        toFeedback=findViewById(R.id.toFeedback);
+        toFeedback.setOnClickListener(this);
         toexer.setOnClickListener(this);
     }
     @Override
@@ -35,6 +37,11 @@ SharedPreference sharedPref;
         {
             Intent intent = new Intent(this, ExercisesListActivity.class);
             startActivity(intent);
+        }
+        else if(view==toFeedback)
+        {
+            Intent intent = new Intent(this, FeedbackActivity.class);
+            startActivityForResult(intent, 0);
         }
 
 
@@ -59,6 +66,9 @@ SharedPreference sharedPref;
         item.setEnabled(false);
         item.setVisible(false);
         item = menu.getItem(2);
+        item.setEnabled(false);
+        item.setVisible(false);
+        item = menu.getItem(6);
         item.setEnabled(false);
         item.setVisible(false);
 

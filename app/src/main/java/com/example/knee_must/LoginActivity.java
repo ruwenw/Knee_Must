@@ -58,6 +58,7 @@ SharedPreference sharedPref;
                         sharedPref.SetUsername(DataModel.doctors.get(i).getUsername());
                         sharedPref.SetFname(DataModel.doctors.get(i).getFname());
                         sharedPref.SetIsLogedIn(true);
+                        sharedPref.SetfirebaseNum(i);
                     }else
                     {
                         Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show();
@@ -75,6 +76,7 @@ SharedPreference sharedPref;
                                 sharedPref.SetUsername(DataModel.patients.get(j).getUsername());
                                 sharedPref.SetFname(DataModel.patients.get(j).getFname());
                                 sharedPref.SetIsLogedIn(true);
+                                sharedPref.SetfirebaseNum(j);
                                 found = true;
                             }else
                             {
@@ -118,6 +120,9 @@ SharedPreference sharedPref;
         item.setEnabled(false);
         item.setVisible(false);
         item = menu.getItem(5);
+        item.setEnabled(false);
+        item.setVisible(false);
+        item = menu.getItem(6);
         item.setEnabled(false);
         item.setVisible(false);
 

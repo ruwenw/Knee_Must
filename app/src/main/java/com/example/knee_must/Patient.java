@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Patient extends Person{
     private String id;
     private ArrayList<Exercise> exercises;
+    private String feedback;
 
     public Patient(){
         super();
@@ -12,10 +13,11 @@ public class Patient extends Person{
 
     }
 
-    public Patient(String username, String password, String id, ArrayList<Integer> exercises,String fname,String lname) {
+    public Patient(String username, String password, String id, ArrayList<Exercise> exercises,String fname,String lname) {
         super(username, password, fname, lname);
         this.id = id;
         this.exercises = DataModel.exercises;
+        this.feedback=null;
 
     }
 
@@ -29,9 +31,15 @@ public class Patient extends Person{
         this.id = id;
     }
 
+    public String getFeedback() {
+        return feedback;
+    }
 
-
-    /*public ArrayList<Exercise> getExercises() {
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+    /*
+    public ArrayList<Exercise> getExercises() {
         return exercises;
     }
 

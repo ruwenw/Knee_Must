@@ -122,6 +122,9 @@ SharedPreference sharedPref;
         item = menu.getItem(4);
         item.setEnabled(false);
         item.setVisible(false);
+        item = menu.getItem(6);
+        item.setEnabled(false);
+        item.setVisible(false);
 
         if (sharedPref.GetUsername().equals("")) {
             item = menu.getItem(0);

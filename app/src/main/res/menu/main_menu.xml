@@ -31,6 +31,11 @@
             android:id="@+id/action_Delete"
             android:title="Delete User"
             android:orderInCategory="600"/>
+        <item
+            android:id="@+id/action_Back"
+            android:title="Back"
+            android:orderInCategory="700"/>
+
 
 
 </menu>

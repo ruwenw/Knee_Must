@@ -26,8 +26,8 @@ public class ExerciseActivity extends AppCompatActivity implements IView, View.O
         builder = new AlertDialog.Builder(this);
         super.onCreate(savedInstanceState);
         this.presenter=new Presenter(this);
-        deleteExer=findViewById(R.id.deleteExer);
         setContentView(R.layout.activity_exercise);
+        deleteExer=findViewById(R.id.deleteExer);
         tvexname = findViewById(R.id.exname);
         tvlink=findViewById(R.id.tvlink);
         tvmessage=findViewById(R.id.tvmessage);
@@ -119,7 +119,11 @@ public class ExerciseActivity extends AppCompatActivity implements IView, View.O
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivityForResult(intent, 0);
             return true;
-        } else if (id == R.id.action_logout) {
+        } else if (id == R.id.action_Back) {
+            Intent intent = new Intent(this, ExercisesListActivity.class);
+            startActivityForResult(intent, 0);
+            return true;
+        }else if (id == R.id.action_logout) {
             builder.setMessage("Do you want to logout?")
                     .setCancelable(false)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {

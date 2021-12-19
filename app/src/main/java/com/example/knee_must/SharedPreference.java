@@ -46,4 +46,13 @@ public class SharedPreference {
         String user = mySharedPrefrences.getString("username","");
         return user;
     }
+    public void SetfirebaseNum(int i) {
+        SharedPreferences.Editor editor = mySharedPrefrences.edit();
+        editor.putInt("firebaseNum",0);
+        editor.commit();
+    }
+    public int GetFirebaseNum() {
+        int i= mySharedPrefrences.getInt("firebasenum",0);
+        return i;
+    }
 }

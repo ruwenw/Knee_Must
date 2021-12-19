@@ -111,7 +111,11 @@ public class DeleteActivity extends AppCompatActivity implements View.OnClickLis
             startActivityForResult(intent, 0);
             //Toast.makeText(this,"you selected login",Toast.LENGTH_LONG).show();
             return true;
-        } else if (id == R.id.action_register) {
+        }  else if (id == R.id.action_Back) {
+            Intent intent = new Intent(this, ExercisesListActivity.class);
+            startActivityForResult(intent, 0);
+            return true;
+        }else if (id == R.id.action_register) {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivityForResult(intent, 0);
             return true;
