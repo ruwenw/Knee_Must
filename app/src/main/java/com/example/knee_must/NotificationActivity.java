@@ -1,8 +1,13 @@
 package com.example.knee_must;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,42 +16,84 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-SharedPreference sharedPref;
+import java.text.DateFormat;
+import java.util.Calendar;
+
+public class NotificationActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
+TextView mTextView;
+    Button buttonTimePicker;
+    Button buttonCancelAlarm;
+    SharedPreference sharedPref;
     AlertDialog.Builder builder;
-    Button toexer,toFeedback;
-    TextView test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPref = new SharedPreference(this);
         builder = new AlertDialog.Builder(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //test=findViewById(R.id.test);
-        //test.setText("2314");
-        toexer=findViewById(R.id.toExercises);
-        toFeedback=findViewById(R.id.toFeedback);
-        toFeedback.setOnClickListener(this);
-        toexer.setOnClickListener(this);
+        setContentView(R.layout.activity_notification);
+        mTextView = findViewById(R.id.textView);
+        buttonTimePicker = findViewById(R.id.button_timepicker);
+        buttonTimePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
+            }
+        });
+
+        buttonCancelAlarm = findViewById(R.id.button_cancel);
+        buttonCancelAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancelAlarm();
+            }
+        });
+
+
+
+
+
     }
     @Override
-    public void onClick(View view) {
-        if(view==toexer)
-        {
-            Intent intent = new Intent(this, ExercisesListActivity.class);
-            startActivity(intent);
-        }
-        else if(view==toFeedback)
-        {
-            Intent intent = new Intent(this, FeedbackActivity.class);
-            startActivityForResult(intent, 0);
-        }
+    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        c.set(Calendar.MINUTE, minute);
+        c.set(Calendar.SECOND, 0);
 
+        updateTimeText(c);
+        startAlarm(c);
+    }
+    private void updateTimeText(Calendar c) {
+        String timeText = "Alarm set for: ";
+        timeText += DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
 
+        mTextView.setText(timeText);
     }
 
+    private void startAlarm(Calendar c) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, MyBroadcastReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        if (c.before(Calendar.getInstance())) {
+            c.add(Calendar.DATE, 1);
+        }
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+    }
+
+    public void cancelAlarm() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this,MyBroadcastReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        alarmManager.cancel(pendingIntent);
+        mTextView.setText("Alarm canceled");
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -57,18 +104,8 @@ SharedPreference sharedPref;
             MenuItem item= menu.getItem(i);
         }
         MenuItem item;
-        item = menu.getItem(0);
-        item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        item = menu.getItem(3);
-        item.setEnabled(false);
-        item.setVisible(false);
-        item = menu.getItem(1);
-        item.setEnabled(false);
-        item.setVisible(false);
-        item = menu.getItem(2);
-        item.setEnabled(false);
-        item.setVisible(false);
-        item = menu.getItem(6);
+
+        item = menu.getItem(7);
         item.setEnabled(false);
         item.setVisible(false);
 
@@ -99,8 +136,7 @@ SharedPreference sharedPref;
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivityForResult(intent, 0);
             return true;
-        }
-        else if (id == R.id.action_SetTimer) {
+        } else if (id == R.id.action_SetTimer) {
             Intent intent = new Intent(this, NotificationActivity.class);
             startActivityForResult(intent, 0);
             return true;
@@ -137,6 +173,7 @@ SharedPreference sharedPref;
         }
         return true;
     }
+
 
 
 }

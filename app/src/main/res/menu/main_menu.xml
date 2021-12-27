@@ -35,7 +35,10 @@
             android:id="@+id/action_Back"
             android:title="Back"
             android:orderInCategory="700"/>
-
+        <item
+            android:id="@+id/action_SetTimer"
+            android:title="Set Reminder"
+            android:orderInCategory="800"/>
 
 
 </menu>
