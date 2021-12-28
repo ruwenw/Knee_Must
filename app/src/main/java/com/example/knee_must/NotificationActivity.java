@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -23,9 +24,10 @@ import java.text.DateFormat;
 import java.util.Calendar;
 
 public class NotificationActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
-TextView mTextView;
+    TextView mTextView;
     Button buttonTimePicker;
     Button buttonCancelAlarm;
+    //CheckBox dailyRebeat;
     SharedPreference sharedPref;
     AlertDialog.Builder builder;
     @Override
@@ -43,6 +45,14 @@ TextView mTextView;
                 timePicker.show(getSupportFragmentManager(), "time picker");
             }
         });
+        /*
+        dailyRebeat=findViewById(R.id.dailyRepeat);
+        dailyRebeat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });*/
 
         buttonCancelAlarm = findViewById(R.id.button_cancel);
         buttonCancelAlarm.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +93,8 @@ TextView mTextView;
             c.add(Calendar.DATE, 1);
         }
 
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+        //alarmManager.setExact(AlarmManager.INTERVAL_DAY, c.getTimeInMillis(), pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
     }
 
     public void cancelAlarm() {

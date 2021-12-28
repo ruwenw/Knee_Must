@@ -5,20 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ExercisesListActivity">
+    tools:context=".DoctorMainActivity">
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lvex"
+        android:id="@+id/lvpatients"
         />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Exercise"
-        android:id="@+id/addExer"
+        android:text="Add Patients"
+        android:id="@+id/addPatient"
         android:textSize="20dp"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="120dp"/>
-
 
 </LinearLayout>

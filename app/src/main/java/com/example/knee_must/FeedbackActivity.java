@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class FeedbackActivity extends AppCompatActivity implements View.OnClickListener {
 Button submitfeba;
@@ -26,6 +27,9 @@ EditText feedback;
         if(view==submitfeba)
         {
             DataModel.patients.get(sharedPref.GetFirebaseNum()).setFeedback(feedback.getText().toString());
+            DataModel.savePatients();
+            Toast.makeText(getApplicationContext(), "Saved",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 }

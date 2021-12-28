@@ -52,12 +52,13 @@ SharedPreference sharedPref;
                 if (DataModel.doctors.get(i).getUsername().equals(username.getText().toString())) {
                     if(DataModel.doctors.get(i).getPassword().equals(password.getText().toString()))
                     {
-                        Intent intent = new Intent(this, MainActivity.class);
+                        Intent intent = new Intent(this, DoctorMainActivity.class);
                         startActivity(intent);
                         found = true;
                         sharedPref.SetUsername(DataModel.doctors.get(i).getUsername());
                         sharedPref.SetFname(DataModel.doctors.get(i).getFname());
                         sharedPref.SetIsLogedIn(true);
+                        sharedPref.SetIsDoctor(true);
                         sharedPref.SetfirebaseNum(i);
                     }else
                     {

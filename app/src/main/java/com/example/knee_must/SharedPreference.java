@@ -55,4 +55,17 @@ public class SharedPreference {
         int i= mySharedPrefrences.getInt("firebasenum",0);
         return i;
     }
+    public void SetIsDoctor(boolean isDoctor)
+    {
+        SharedPreferences.Editor editor= mySharedPrefrences.edit();
+        editor.putBoolean("isDoctor",isDoctor);
+        editor.commit();
+    }
+    public boolean IsDoctor()
+    {
+        boolean is=mySharedPrefrences.getBoolean("isDoctor",false);
+        return is;
+
+    }
+
 }

@@ -5,20 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ExercisesListActivity">
-    <ListView
-        android:layout_width="match_parent"
+    android:gravity="center"
+    tools:context=".DoctorsPatientActivity">
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lvex"
+        android:textSize="25dp"
+        android:text="Patients Daily Feedback:"
+        />
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Feedback"
+        android:textSize="20dp"
+        android:id="@+id/tvfeedback"
         />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Exercise"
-        android:id="@+id/addExer"
+        android:text="Remove Patient"
+        android:id="@+id/removePatient"
         android:textSize="20dp"
         android:layout_marginTop="40dp"
-        android:layout_marginLeft="120dp"/>
+        />
 
 
 </LinearLayout>

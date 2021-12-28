@@ -14,6 +14,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 EditText etusername,etpassword,fname,lname,etid;
 TextView notfdoctor;

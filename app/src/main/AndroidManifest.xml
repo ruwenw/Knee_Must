@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Knee_Must">
         <activity
+            android:name=".DoctorsPatientActivity"
+            android:exported="true" />
+        <activity
+            android:name=".DoctorMainActivity"
+            android:exported="true" />
+        <activity
             android:name=".NotificationActivity"
             android:exported="true" />
         <activity android:name=".FeedbackActivity" />
@@ -29,8 +35,7 @@
         </activity>
         <activity android:name=".MainActivity" />
 
-        <receiver android:name=".MyBroadcastReceiver"/>
-
+        <receiver android:name=".MyBroadcastReceiver" />
     </application>
 
 </manifest>
