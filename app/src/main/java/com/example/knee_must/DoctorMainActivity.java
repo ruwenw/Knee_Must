@@ -37,7 +37,7 @@ ArrayList<String> arypatientlist;
         builder = new AlertDialog.Builder(this);
         ArrayList<String> temp = new ArrayList<>();
 
-        if( DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().isEmpty()){
+        if( DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients()==null){
             temp.add("No Patients yet");
 
 
