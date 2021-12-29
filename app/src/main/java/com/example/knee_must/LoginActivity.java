@@ -38,20 +38,24 @@ SharedPreference sharedPref;
         btntoregister.setOnClickListener(this);
         if(sharedPref.IsLogedIN())
         {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            if(sharedPref.IsDoctor()){
+                Intent intent = new Intent(this, DoctorMainActivity.class);
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
+
         }
     }
 
     @Override
     public void onClick(View view) {
         boolean found = false;
-        if(view==btnlogin)
-        {
-            for (int i=0; i<DataModel.doctors.size(); i++) {
+        if (view == btnlogin) {
+            for (int i = 0; i < DataModel.doctors.size(); i++) {
                 if (DataModel.doctors.get(i).getUsername().equals(username.getText().toString())) {
-                    if(DataModel.doctors.get(i).getPassword().equals(password.getText().toString()))
-                    {
+                    if (DataModel.doctors.get(i).getPassword().equals(password.getText().toString())) {
                         Intent intent = new Intent(this, DoctorMainActivity.class);
                         startActivity(intent);
                         found = true;
@@ -60,46 +64,44 @@ SharedPreference sharedPref;
                         sharedPref.SetIsLogedIn(true);
                         sharedPref.SetIsDoctor(true);
                         sharedPref.SetfirebaseNum(i);
-                    }else
-                    {
+                    } else {
                         Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show();
                     }
 
 
                 }
-                if (!found) {
-                    for (int j = 0; j < DataModel.patients.size(); j++) {
-                        if (DataModel.patients.get(j).getUsername().equals(username.getText().toString()) ) {
-                            if(DataModel.patients.get(j).getPassword().equals(password.getText().toString()))
-                            {
-                                Intent intent = new Intent(this, MainActivity.class);
-                                startActivity(intent);
-                                sharedPref.SetUsername(DataModel.patients.get(j).getUsername());
-                                sharedPref.SetFname(DataModel.patients.get(j).getFname());
-                                sharedPref.SetIsLogedIn(true);
-                                sharedPref.SetfirebaseNum(j);
-                                found = true;
-                            }else
-                            {
-                                Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show();
-                            }
-
+            }
+            if (!found) {
+                for (int j = 0; j < DataModel.patients.size(); j++) {
+                    if (DataModel.patients.get(j).getUsername().equals(username.getText().toString())) {
+                        if (DataModel.patients.get(j).getPassword().equals(password.getText().toString())) {
+                            Intent intent = new Intent(this, MainActivity.class);
+                            startActivity(intent);
+                            sharedPref.SetUsername(DataModel.patients.get(j).getUsername());
+                            sharedPref.SetFname(DataModel.patients.get(j).getFname());
+                            sharedPref.SetIsLogedIn(true);
+                            sharedPref.SetfirebaseNum(j);
+                            found = true;
+                        } else {
+                            Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 }
-                if (!found) {
-                    Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
-                }
+            }
+            if (!found) {
+                Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
             }
         }
-        if(view==btntoregister){
+        if (view == btntoregister) {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
         }
-        if(view==btntodelete){
+        if (view == btntodelete) {
             Intent intent = new Intent(this, DeleteActivity.class);
             startActivity(intent);
         }
+
 
     }
     @Override
@@ -148,15 +150,24 @@ SharedPreference sharedPref;
             startActivityForResult(intent, 0);
             //Toast.makeText(this,"you selected login",Toast.LENGTH_LONG).show();
             return true;
+        }else if (id == R.id.action_SetTimer) {
+            Intent intent = new Intent(this, NotificationActivity.class);
+            startActivityForResult(intent, 0);
+            return true;
         } else if (id == R.id.action_register) {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivityForResult(intent, 0);
             return true;
         } else if (id == R.id.action_GoHome) {
             if (sharedPref.IsLogedIN()) {
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-
+                if(sharedPref.IsDoctor())
+                {
+                    Intent intent = new Intent(this, DoctorMainActivity.class);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                }
             } else {
                 Toast.makeText(this, "You need to login to continue", Toast.LENGTH_SHORT).show();
             }

@@ -24,7 +24,7 @@ Button removePatient;
         builder = new AlertDialog.Builder(this);
         tvFeeback=findViewById(R.id.tvfeedback);
         removePatient=findViewById(R.id.removePatient);
-        tvFeeback.setText(DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getFeedback());
+        tvFeeback.setText(DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(getIntent().getIntExtra("Patient",0))).getFeedback());
         removePatient.setOnClickListener(this);
     }
 

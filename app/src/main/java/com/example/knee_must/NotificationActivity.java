@@ -151,6 +151,10 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
             Intent intent = new Intent(this, NotificationActivity.class);
             startActivityForResult(intent, 0);
             return true;
+        }else if (id == R.id.action_Back) {
+            Intent intent = new Intent(this, ExercisesListActivity.class);
+            startActivityForResult(intent, 0);
+            return true;
         }else if (id == R.id.action_Delete) {
             Intent intent = new Intent(this, DeleteActivity.class);
             startActivityForResult(intent, 0);

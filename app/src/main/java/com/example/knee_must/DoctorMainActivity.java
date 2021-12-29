@@ -4,14 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,12 +28,15 @@ ArrayList<String> arypatientlist;
     MyListAdapter adapter;
     AlertDialog.Builder builder;
     Dialog patientDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_main);
         sharedPref = new SharedPreference(this);
+        builder = new AlertDialog.Builder(this);
         ArrayList<String> temp = new ArrayList<>();
+
         if( DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().isEmpty()){
             temp.add("No Patients yet");
 
@@ -37,15 +44,15 @@ ArrayList<String> arypatientlist;
         }else{
             for (int i = 0 ; i < DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().size();i++)
             {
-                String fname=DataModel.patients.get(i).getFname();
+                int patientnum=DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(i);
+                String fname=DataModel.patients.get(patientnum).getFname();
                 temp.add(fname);
             }
 
        }
 
 
-        //}
-        /*temp.add("No Patients yet");*/
+
 
         lvpatients = findViewById(R.id.lvpatients);
 
@@ -62,30 +69,7 @@ ArrayList<String> arypatientlist;
         {
             OpenAddPatientDialog();
 
-            /*builder.setMessage("Do you want to add Exercise?")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            sharedPref.SetUsername("");
-                            sharedPref.Clear();
-                            Toast.makeText(getApplicationContext(), "You logged out",
-                                    Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                            startActivity(i);
-                            finish();
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            //  Action for 'NO' Button
-                            dialog.cancel();
-                            Toast.makeText(getApplicationContext(), "You canceled the logout",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            AlertDialog alert = builder.create();
-            alert.setTitle("Logout");
-            alert.show();*/
+
         }
 
     }
@@ -106,23 +90,7 @@ ArrayList<String> arypatientlist;
             public void onClick(View v) {
                 if(v ==  submitaddPatient)
                 {
-                    /*if (DataModel.exercises.get(getIntent().getIntExtra("WE", 0)).getExercisesList() != null)
-                    {
-                        DataModel.muscles.get(getIntent().getIntExtra("WE", 0)).addExercise(
-                                new Exercise(nameOfExercise.getText().toString(),
-                                        sharedPref.GetUsername(),
-                                        descriptionOfExercise.getText().toString(),
-                                        null, null, null, "false"));
-                    }
-                    else
-                    {
-                        ArrayList<Exercise> temp = new ArrayList<>();
-                        temp.add(new Exercise(nameOfExercise.getText().toString(),
-                                sharedPref.GetUsername(),
-                                descriptionOfExercise.getText().toString(),
-                                null, null, null, "false"));
-                        DataModel.muscles.get(getIntent().getIntExtra("WE", 0)).setExercisesList(temp);
-                    }*/
+
                     for (int i = 0 ; i < DataModel.patients.size();i++)
                     {
                         if(DataModel.patients.get(i).getId().equals(patientId.getText().toString()))
@@ -147,7 +115,7 @@ ArrayList<String> arypatientlist;
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent1 = new Intent(this, DoctorsPatientActivity.class);
-        intent1.putExtra("Patient", i);
+        intent1.putExtra("Patient",i);
         startActivity(intent1);
         finish();
     }
@@ -156,5 +124,95 @@ ArrayList<String> arypatientlist;
         //i.putExtra("WE", getIntent().getIntExtra("WE", 0));
         startActivity(i);
         finish();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+
+        for(int i=0;i<menu.size();i++)
+        {
+            MenuItem item= menu.getItem(i);
+        }
+        MenuItem item;
+        item = menu.getItem(0);
+        item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        item = menu.getItem(3);
+        item.setEnabled(false);
+        item.setVisible(false);
+        item = menu.getItem(1);
+        item.setEnabled(false);
+        item.setVisible(false);
+        item = menu.getItem(2);
+        item.setEnabled(false);
+        item.setVisible(false);
+        item = menu.getItem(6);
+        item.setEnabled(false);
+        item.setVisible(false);
+
+
+        if (sharedPref.GetFname().equals("")) {
+            item = menu.getItem(0);
+            item.setEnabled(false);
+            item.setVisible(false);
+        }
+        item = menu.getItem(0);
+        item.setTitle(sharedPref.GetFname());
+
+        return true;
+
+    }
+//*/
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_login) {
+            //Intent intent = new Intent(this, LoginActivity.class);
+            //startActivityForResult(intent, 0);
+            Toast.makeText(this,"You are already loged in",Toast.LENGTH_LONG).show();
+            return true;
+        }  else if (id == R.id.action_register) {
+            Intent intent = new Intent(this, RegisterActivity.class);
+            startActivityForResult(intent, 0);
+            return true;
+        }
+        else if (id == R.id.action_SetTimer) {
+            Intent intent = new Intent(this, NotificationActivity.class);
+            startActivityForResult(intent, 0);
+            return true;
+        }else if (id == R.id.action_Delete) {
+            Intent intent = new Intent(this, DeleteActivity.class);
+            startActivityForResult(intent, 0);
+            return true;
+        }else if (id == R.id.action_logout) {
+            builder.setMessage("Do you want to logout?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            sharedPref.SetFname("");
+                            sharedPref.SetUsername("");
+                            sharedPref.Clear();
+                            Toast.makeText(getApplicationContext(), "You logged out",
+                                    Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(i);
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //  Action for 'NO' Button
+                            dialog.cancel();
+                            Toast.makeText(getApplicationContext(), "You canceled the logout",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.setTitle("Logout");
+            alert.show();
+        }
+        return true;
     }
 }
