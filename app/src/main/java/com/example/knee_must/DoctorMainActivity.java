@@ -37,12 +37,12 @@ ArrayList<String> arypatientlist;
         builder = new AlertDialog.Builder(this);
         ArrayList<String> temp = new ArrayList<>();
 
-        if( DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients()==null){
+        if( DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(0)==-1&&DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().size()==1){
             temp.add("No Patients yet");
 
 
         }else{
-            for (int i = 0 ; i < DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().size();i++)
+            for (int i = 1 ; i < DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().size()-1;i++)
             {
                 int patientnum=DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(i);
                 String fname=DataModel.patients.get(patientnum).getFname();
@@ -90,6 +90,7 @@ ArrayList<String> arypatientlist;
             public void onClick(View v) {
                 if(v ==  submitaddPatient)
                 {
+                    boolean found=false;
 
                     for (int i = 0 ; i < DataModel.patients.size();i++)
                     {
@@ -98,9 +99,16 @@ ArrayList<String> arypatientlist;
                             DataModel.doctors.get(sharedPref.GetFirebaseNum()).addPatient(i);
                             DataModel.saveDoctors();
                             patientDialog.dismiss();
+                            found=true;
                             restartapp();
                         }
                     }
+                    if(found==false)
+                    {
+                        Toast.makeText(getApplicationContext(),"Patient not found",Toast.LENGTH_LONG).show();
+
+                    }
+
 
 
                 }
@@ -120,7 +128,7 @@ ArrayList<String> arypatientlist;
         finish();
     }
     void restartapp() {
-        Intent i = new Intent(getApplicationContext(), DoctorMainActivity.class);
+        Intent i = new Intent(this, DoctorMainActivity.class);
         //i.putExtra("WE", getIntent().getIntExtra("WE", 0));
         startActivity(i);
         finish();

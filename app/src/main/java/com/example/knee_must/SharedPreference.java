@@ -48,7 +48,7 @@ public class SharedPreference {
     }
     public void SetfirebaseNum(int i) {
         SharedPreferences.Editor editor = mySharedPrefrences.edit();
-        editor.putInt("firebaseNum",0);
+        editor.putInt("firebasenum",i);
         editor.commit();
     }
     public int GetFirebaseNum() {
