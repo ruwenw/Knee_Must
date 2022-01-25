@@ -2,9 +2,9 @@ package com.example.knee_must;
 
 import java.util.ArrayList;
 
-public class Patient extends Person{
+public class  Patient extends Person{
     private String id;
-    private ArrayList<Exercise> exercises;
+    private ArrayList<Integer> exercises;
     private String feedback;
 
     public Patient(){
@@ -13,10 +13,10 @@ public class Patient extends Person{
 
     }
 
-    public Patient(String username, String password, String id, ArrayList<Exercise> exercises,String fname,String lname) {
+    public Patient(String username, String password, String id,String fname,String lname) {
         super(username, password, fname, lname);
         this.id = id;
-        this.exercises = DataModel.exercises;
+        this.exercises = new ArrayList<Integer>(new Integer(-1));
         this.feedback=null;
 
     }
@@ -38,15 +38,15 @@ public class Patient extends Person{
     public void setFeedback(String feedback) {
         this.feedback = feedback;
     }
-    /*
-    public ArrayList<Exercise> getExercises() {
+
+    public ArrayList<Integer> getExercises() {
         return exercises;
     }
 
     public void setExercises(ArrayList<Integer> exercises) {
         this.exercises = exercises;
     }
-    public void addExercises(int exnumber){
-        this.exercises.add(exnumber);
-    }*/
+    //public void addExercises(int exnumber){
+        //this.exercises.add(exnumber);
+    //}
 }

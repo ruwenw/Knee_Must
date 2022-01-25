@@ -95,7 +95,7 @@ SharedPreference sharedPref;
                 }
                 else
                 {
-                    DataModel.patients.add(new Patient(etusername.getText().toString(), etpassword.getText().toString(),etid.getText().toString(),null,
+                    DataModel.patients.add(new Patient(etusername.getText().toString(), etpassword.getText().toString(),etid.getText().toString(),
                             fname.getText().toString(), lname.getText().toString()));
                     DataModel.savePatients();
                     sharedPref.SetUsername(etusername.getText().toString());

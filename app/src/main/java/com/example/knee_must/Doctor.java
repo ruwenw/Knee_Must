@@ -13,7 +13,7 @@ public class Doctor extends Person {
     public Doctor(String username, String password, String fname,String lname) {
         super(username,password,fname,lname);
         this.patients=new ArrayList<Integer>(new Integer(-1));
-
+       // new ArrayList<Integer>(new Integer(-1))
 
     }
  

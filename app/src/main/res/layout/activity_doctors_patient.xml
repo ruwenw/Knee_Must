@@ -23,9 +23,16 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Add Exercises"
+        android:id="@+id/addPaExer"
+        android:textSize="20dp"
+        android:layout_marginTop="40dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Remove Patient"
         android:id="@+id/removePatient"
-        android:textSize="20dp"
+        android:textSize="15dp"
         android:layout_marginTop="40dp"
         />
 

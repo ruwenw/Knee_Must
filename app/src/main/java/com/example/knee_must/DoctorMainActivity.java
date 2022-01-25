@@ -37,16 +37,16 @@ ArrayList<String> arypatientlist;
         builder = new AlertDialog.Builder(this);
         ArrayList<String> temp = new ArrayList<>();
 
-        if( DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(0)==-1&&DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().size()==1){
+        if( DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(0)==-1){
             temp.add("No Patients yet");
-
+            //&&DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().size()==1)
 
         }else{
-            for (int i = 1 ; i < DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().size()-1;i++)
+            for (int i = 0 ; i < (DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().size());i++)
             {
-                int patientnum=DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(i);
-                String fname=DataModel.patients.get(patientnum).getFname();
-                temp.add(fname);
+                //int patientnum=DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(i);
+                //String fname=DataModel.patients.get(patientnum).getFname();
+                temp.add(DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(i)).getFname());
             }
 
        }
@@ -96,13 +96,20 @@ ArrayList<String> arypatientlist;
                     {
                         if(DataModel.patients.get(i).getId().equals(patientId.getText().toString()))
                         {
-                            DataModel.doctors.get(sharedPref.GetFirebaseNum()).addPatient(i);
+                            if(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(0)==-1){
+                                DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().set(0,i);
+                            } else{
+                                DataModel.doctors.get(sharedPref.GetFirebaseNum()).addPatient(i);
+                            }
                             DataModel.saveDoctors();
                             patientDialog.dismiss();
                             found=true;
                             restartapp();
                         }
                     }
+
+
+
                     if(found==false)
                     {
                         Toast.makeText(getApplicationContext(),"Patient not found",Toast.LENGTH_LONG).show();

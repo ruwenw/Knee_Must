@@ -4,28 +4,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center">
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="add new Exercise"
-        android:id="@+id/addnewExer"
-        android:layout_marginTop="10dp"/>
     <EditText
         android:layout_marginTop="10dp"
-        android:id="@+id/Name"
+        android:id="@+id/exerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint=" Name "
         android:textSize="20dp"
         />
 
-
+    <EditText
+        android:layout_marginTop="10dp"
+        android:id="@+id/exerDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint=" Description "
+        android:textSize="20dp"
+        />
 
     <Button
         android:layout_gravity="center"
-        android:id="@+id/submitaddExer"
+        android:id="@+id/submitaddnewExer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add"
