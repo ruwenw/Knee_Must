@@ -23,10 +23,12 @@
         <entry key="..\:/Users/Ruwen Weidner/AndroidStudioProjects/Knee_Must2/app/src/main/res/layout/custom_exer_add_dialog.xml" value="0.30932971014492755" />
         <entry key="..\:/Users/Ruwen Weidner/AndroidStudioProjects/Knee_Must2/app/src/main/res/layout/custom_patient_add_dialog.xml" value="0.30932971014492755" />
         <entry key="..\:/Users/Ruwen Weidner/AndroidStudioProjects/Knee_Must2/app/src/main/res/menu/main_menu.xml" value="0.378125" />
+        <entry key="..\:/Users/Ruwen Weidner/AndroidStudioProjects/Knee_Must26/app/src/main/res/layout/custom_exer_add_dialog.xml" value="0.20989583333333334" />
+        <entry key="..\:/Users/Ruwen Weidner/AndroidStudioProjects/Knee_Must26/app/src/main/res/layout/custom_new_exer_dialog.xml" value="0.20989583333333334" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

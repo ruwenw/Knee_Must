@@ -20,7 +20,8 @@ EditText exerName,exerDescription,name;
 Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
     SharedPreference sharedPref;
     AlertDialog.Builder builder;
-    Dialog exerDialog;
+    Dialog exerDialog,newexerDialog;
+    //int patientnum=DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(getIntent().getIntExtra("Patient",0));
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +32,7 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
         removePatient=findViewById(R.id.removePatient);
         addExer=findViewById(R.id.addPaExer);
 
-        tvFeeback.setText(DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(getIntent().getIntExtra("Patient",0))).getFeedback());
+        tvFeeback.setText(DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getFeedback());
         removePatient.setOnClickListener(this);
         addExer.setOnClickListener(this);
     }
@@ -76,54 +77,57 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
     public void OpenAddExerDialog() {
         exerDialog = new Dialog(this);
         exerDialog.setContentView(R.layout.custom_exer_add_dialog);
-        exerDialog.setTitle("Add Exercise");
+        //exerDialog.setTitle("Add Exercise");
 
         exerDialog.setCancelable(true);
-        addnewExer=findViewById(R.id.addnewExer);
+        addnewExer=exerDialog.findViewById(R.id.addnewExer);
         addnewExer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(view==addnewExer)
-                {
+                if(view==addnewExer) {
                     OpenAddNewExerDialog();
                 }
             }
         });
+
         name= exerDialog.findViewById(R.id.Name);
         submitaddExer = exerDialog.findViewById(R.id.submitaddExer);
-        submitaddnewExer.setOnClickListener(new View.OnClickListener() {
+        submitaddExer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(view ==  submitaddExer)
                 {
                     for(int i=0;i<DataModel.exercises.size();i++){
-                        if(DataModel.exercises.get(i).getName()==name){
-                            DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(getIntent().getIntExtra("Patient",0))).getExercises().add(i);
-                            DataModel.saveExercieses();
+                        if(DataModel.exercises.get(i).getName().equals(name.getText().toString())){
+                            if(DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getExercises().get(0)==-1)
+                            {
+                                DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getExercises().set(0,i);
+                            }else{
+                                DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getExercises().add(i);
+                            }
+                            DataModel.savePatients();
                             exerDialog.dismiss();
                             restartapp();
                         }
                     }
 
 
-                    DataModel.exercises.add(
-                            new Exercise(exerName.getText().toString(),
-                                    exerDescription.getText().toString()));
 
                 }
             }
         });
-                exerDialog.show();
+
+        exerDialog.show();
     }
     public void OpenAddNewExerDialog(){
-        exerDialog = new Dialog(this);
-        exerDialog.setContentView(R.layout.custom_new_exer_dialog);
-        exerDialog.setTitle("Add new Exercise");
+        newexerDialog = new Dialog(this);
+        newexerDialog.setContentView(R.layout.custom_new_exer_dialog);
+        newexerDialog.setTitle("Add new Exercise");
 
-        exerDialog.setCancelable(true);
-        exerName= exerDialog.findViewById(R.id.exerName);
-        exerDescription = exerDialog.findViewById(R.id.exerDescription);
-        submitaddnewExer = exerDialog.findViewById(R.id.submitaddnewExer);
+        newexerDialog.setCancelable(true);
+        exerName= newexerDialog.findViewById(R.id.exerName);
+        exerDescription = newexerDialog.findViewById(R.id.exerDescription);
+        submitaddnewExer = newexerDialog.findViewById(R.id.submitaddnewExer);
 
 
         submitaddnewExer.setOnClickListener(new View.OnClickListener() {
@@ -131,20 +135,18 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
             public void onClick(View v) {
                 if(v ==  submitaddnewExer)
                 {
-
-                    DataModel.exercises.add(
-                            new Exercise(exerName.getText().toString(),
+                    DataModel.exercises.add(new Exercise(exerName.getText().toString(),
                                     exerDescription.getText().toString()));
                     DataModel.saveExercieses();
-                    exerDialog.dismiss();
+                    newexerDialog.dismiss();
                     restartapp();
                 }
             }
         });
-        exerDialog.show();
+        newexerDialog.show();
     }
     void restartapp() {
-        Intent i = new Intent(this, DoctorMainActivity.class);
+        Intent i = new Intent(this, DoctorsPatientActivity.class);
         //i.putExtra("WE", getIntent().getIntExtra("WE", 0));
         startActivity(i);
         finish();

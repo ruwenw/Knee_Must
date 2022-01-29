@@ -37,7 +37,7 @@ ArrayList<String> arypatientlist;
         builder = new AlertDialog.Builder(this);
         ArrayList<String> temp = new ArrayList<>();
 
-        if( DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(0)==-1){
+        if( DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(0)==-1){
             temp.add("No Patients yet");
             //&&DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().size()==1)
 
@@ -46,11 +46,11 @@ ArrayList<String> arypatientlist;
             {
                 //int patientnum=DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(i);
                 //String fname=DataModel.patients.get(patientnum).getFname();
-                temp.add(DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(i)).getFname());
+                temp.add(DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(i)).getFname());
             }
 
        }
-
+        temp.add(DataModel.doctors.get(1).getFname());
 
 
 

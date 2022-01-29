@@ -37,10 +37,16 @@ public class  ExercisesListActivity extends AppCompatActivity implements Adapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercises_list);
         ArrayList<String> temp = new ArrayList<>();
-        for (int i = 0 ; i < DataModel.exercises.size();i++)
+        if(DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().get(0)==-1)
         {
-            temp.add(DataModel.exercises.get(i).getName());
+            temp.add("No Exercises yet");
+        }else{
+            for (int i = 0 ; i < DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().size();i++)
+            {
+                temp.add(DataModel.exercises.get(DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().get(i)).getName());
+            }
         }
+
         //temp.add
 
         adapter=new MyListAdapter(this,temp);
