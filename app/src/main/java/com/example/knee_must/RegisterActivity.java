@@ -21,7 +21,7 @@ EditText etusername,etpassword,fname,lname,etid;
 TextView notfdoctor;
 CheckBox isdoctor;
 Button submit;
-boolean needid;
+boolean needid=false;
 SharedPreference sharedPref;
 
     @Override
@@ -86,8 +86,11 @@ SharedPreference sharedPref;
 
                 }
                 if(!needid){
-                    DataModel.doctors.add(new Doctor(etusername.getText().toString(), etpassword.getText().toString(),
-                            fname.getText().toString(), lname.getText().toString()));
+                    ArrayList<Integer> a1=new ArrayList<Integer>();
+                    a1.add(-1);
+                    Doctor d=new Doctor(etusername.getText().toString(), etpassword.getText().toString(),
+                            fname.getText().toString(),a1, lname.getText().toString());
+                    DataModel.doctors.add(d);
                     DataModel.saveDoctors();
                     sharedPref.SetUsername(etusername.getText().toString());
                     finish();
@@ -95,8 +98,11 @@ SharedPreference sharedPref;
                 }
                 else
                 {
-                    DataModel.patients.add(new Patient(etusername.getText().toString(), etpassword.getText().toString(),etid.getText().toString(),
-                            fname.getText().toString(), lname.getText().toString()));
+                    ArrayList<Integer> a2=new ArrayList<Integer>();
+                    a2.add(-1);
+                    Patient p=new Patient(etusername.getText().toString(), etpassword.getText().toString(),etid.getText().toString(),
+                            fname.getText().toString(), lname.getText().toString(),a2);
+                    DataModel.patients.add(p);
                     DataModel.savePatients();
                     sharedPref.SetUsername(etusername.getText().toString());
                     finish();

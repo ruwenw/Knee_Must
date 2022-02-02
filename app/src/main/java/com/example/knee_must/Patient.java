@@ -13,11 +13,11 @@ public class  Patient extends Person{
 
     }
 
-    public Patient(String username, String password, String id,String fname,String lname) {
+    public Patient(String username, String password, String id,String fname,String lname,ArrayList<Integer> exercises) {
         super(username, password, fname, lname);
         this.id = id;
-        this.exercises = new ArrayList<Integer>(new Integer(-1));
-        this.feedback=null;
+        this.exercises = exercises;
+        this.feedback="";
 
     }
 

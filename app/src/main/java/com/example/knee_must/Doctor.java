@@ -10,10 +10,11 @@ public class Doctor extends Person {
         super();
     }
 
-    public Doctor(String username, String password, String fname,String lname) {
+    public Doctor(String username, String password, String fname,ArrayList<Integer> patients,String lname) {
         super(username,password,fname,lname);
-        this.patients=new ArrayList<>(new Integer(-1));
+        this.patients=patients;
        // new ArrayList<Integer>(new Integer(-1))
+        //this.patients.set(0,-1);
 
     }
  

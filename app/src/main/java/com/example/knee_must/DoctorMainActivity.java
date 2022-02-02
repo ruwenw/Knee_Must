@@ -50,7 +50,7 @@ ArrayList<String> arypatientlist;
             }
 
        }
-        temp.add(DataModel.doctors.get(1).getFname());
+
 
 
 
