@@ -13,6 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 EditText username;
 EditText password;
@@ -21,6 +26,11 @@ Button btntodelete;
 Button btntoregister;
 SharedPreference sharedPref;
     AlertDialog.Builder builder;
+
+    FileOutputStream out;
+    String str = null;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +74,26 @@ SharedPreference sharedPref;
                         sharedPref.SetIsLogedIn(true);
                         sharedPref.SetIsDoctor(true);
                         sharedPref.SetfirebaseNum(i);
+                        try {
+                            str = DataModel.doctors.get(i).getFname();
+                            out = openFileOutput("details1",MODE_PRIVATE|MODE_APPEND);
+                        }
+                        catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        if(str.length()>0)
+                        {
+                            try {
+                                out.write(str.getBytes(),0,str.length());
+                                out.close();
+                                Toast.makeText(this,"Your data saved to file",Toast.LENGTH_LONG).show();
+                            }
+                            catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+
                     } else {
                         Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show();
                     }
@@ -81,6 +111,24 @@ SharedPreference sharedPref;
                             sharedPref.SetFname(DataModel.patients.get(j).getFname());
                             sharedPref.SetIsLogedIn(true);
                             sharedPref.SetfirebaseNum(j);
+                            try {
+                                str = DataModel.patients.get(j).getFname();
+                                out = openFileOutput("details1",MODE_PRIVATE|MODE_APPEND);
+                            }
+                            catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                            if(str.length()>0)
+                            {
+                                try {
+                                    out.write(str.getBytes(),0,str.length());
+                                    out.close();
+                                    Toast.makeText(this,"Your data saved to file",Toast.LENGTH_LONG).show();
+                                }
+                                catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                             found = true;
                         } else {
                             Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show();

@@ -13,11 +13,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 SharedPreference sharedPref;
     AlertDialog.Builder builder;
     Button toexer,toFeedback;
     TextView test;
+    InputStream in;
+    String str=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPref = new SharedPreference(this);
@@ -72,14 +78,36 @@ SharedPreference sharedPref;
         item.setEnabled(false);
         item.setVisible(false);
 
-
+        /*
         if (sharedPref.GetFname().equals("")) {
             item = menu.getItem(0);
             item.setEnabled(false);
             item.setVisible(false);
-        }
+        }*/
         item = menu.getItem(0);
-        item.setTitle(sharedPref.GetFname());
+        //item.setTitle(sharedPref.GetFname());
+        try {
+            in=openFileInput("details1");
+            byte[]buffer=new byte[4096];
+            try {
+                in.read(buffer);
+                str=new String(buffer);
+                in.close();
+                if(str!=null)
+                    item.setTitle(str);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+
 
         return true;
 
