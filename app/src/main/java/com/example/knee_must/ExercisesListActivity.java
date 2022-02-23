@@ -37,24 +37,26 @@ public class  ExercisesListActivity extends AppCompatActivity implements Adapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercises_list);
         ArrayList<String> temp = new ArrayList<>();
+        lvexr = findViewById(R.id.lvex);
         if(DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().get(0)==-1)
         {
             temp.add("No Exercises yet");
+            adapter=new MyListAdapter(this,temp);
+            lvexr.setAdapter(adapter);
         }else{
             for (int i = 0 ; i < DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().size();i++)
             {
                 temp.add(DataModel.exercises.get(DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().get(i)).getName());
             }
+            adapter=new MyListAdapter(this,temp);
+            lvexr.setAdapter(adapter);
+            lvexr.setOnItemClickListener(this);
         }
 
         //temp.add
 
-        adapter=new MyListAdapter(this,temp);
-        lvexr = findViewById(R.id.lvex);
-        addExer=findViewById(R.id.addExer);
 
-        lvexr.setAdapter(adapter);
-        lvexr.setOnItemClickListener(this);
+        addExer=findViewById(R.id.addExer);
         addExer.setOnClickListener(this);
     }
 

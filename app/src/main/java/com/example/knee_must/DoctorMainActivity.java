@@ -36,11 +36,12 @@ ArrayList<String> arypatientlist;
         sharedPref = new SharedPreference(this);
         builder = new AlertDialog.Builder(this);
         ArrayList<String> temp = new ArrayList<>();
-
+        lvpatients = findViewById(R.id.lvpatients);
         if( DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(0)==-1){
             temp.add("No Patients yet");
             //&&DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().size()==1)
-
+            adapter=new MyListAdapter(this,temp);
+            lvpatients.setAdapter(adapter);
         }else{
             for (int i = 0 ; i < (DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().size());i++)
             {
@@ -48,17 +49,17 @@ ArrayList<String> arypatientlist;
                 //String fname=DataModel.patients.get(patientnum).getFname();
                 temp.add(DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(i)).getFname());
             }
-
+            adapter=new MyListAdapter(this,temp);
+            lvpatients.setAdapter(adapter);
+            lvpatients.setOnItemClickListener(this);
        }
 
 
 
 
-        lvpatients = findViewById(R.id.lvpatients);
 
-        adapter=new MyListAdapter(this,temp);
-        lvpatients.setAdapter(adapter);
-        lvpatients.setOnItemClickListener(this);
+
+
         addPatient=findViewById(R.id.addPatient);
         addPatient.setOnClickListener(this);
     }
