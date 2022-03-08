@@ -100,8 +100,10 @@ SharedPreference sharedPref;
                 {
                     ArrayList<Integer> a2=new ArrayList<Integer>();
                     a2.add(-1);
+                    ArrayList<String> a3=new ArrayList<>();
+                    a3.add(null);
                     Patient p=new Patient(etusername.getText().toString(), etpassword.getText().toString(),etid.getText().toString(),
-                            fname.getText().toString(), lname.getText().toString(),a2);
+                            fname.getText().toString(), lname.getText().toString(),a2,a3);
                     DataModel.patients.add(p);
                     DataModel.savePatients();
                     sharedPref.SetUsername(etusername.getText().toString());

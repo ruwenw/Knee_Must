@@ -6,30 +6,63 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".FeedbackActivity">
-    <TextView
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add daily Feedback:"
-        android:textSize="20dp"/>
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15dp"
-        android:hint="Type here..."
-        android:id="@+id/etfeedback"
-        android:layout_marginTop="10dp"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Camera"
-        android:id="@+id/btcamera"
-        android:textSize="17dp"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="Submit"
-        android:id="@+id/submitfeba"/>
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add daily Feedback:"
+            android:textSize="20dp"/>
+            <EditText
 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:hint="Type here..."
+                android:id="@+id/etfeedback"
+                android:layout_marginTop="10dp"/>
+            <Button
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Camera"
+                android:id="@+id/btcamera"
+                android:textSize="17dp"/>
+            <Button
 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnpickimg"
+                android:text="Pick Image"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Submit"
+                android:id="@+id/submitfeba"/>
+            <ImageSwitcher
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/imagessw"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Previous"
+                android:id="@+id/previosimg"
+                android:layout_below="@+id/imagessw" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:id="@+id/nextimg"
+
+                android:layout_below="@+id/imagessw"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

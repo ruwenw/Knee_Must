@@ -8,15 +8,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DoctorsPatientActivity extends AppCompatActivity implements View.OnClickListener{
-TextView tvFeeback;
-EditText exerName,exerDescription,name;
+import java.util.ArrayList;
 
+public class DoctorsPatientActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+TextView tvFeeback;
+ListView lvexr;
+EditText exerName,exerDescription,name;
+    ArrayList<String> aryexlist;
+    MyListAdapter adapter;
 Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
     SharedPreference sharedPref;
     AlertDialog.Builder builder;
@@ -31,8 +37,25 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
         tvFeeback=findViewById(R.id.tvfeedback);
         removePatient=findViewById(R.id.removePatient);
         addExer=findViewById(R.id.addPaExer);
+        ArrayList<String> temp = new ArrayList<>();
+        lvexr = findViewById(R.id.lvexer);
+        if(DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getExercises().get(0)==-1)
+        {
+            temp.add("No Exercises yet");
+            adapter=new MyListAdapter(this,temp);
+            lvexr.setAdapter(adapter);
+        }else{
+            for (int i = 0 ; i < DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getExercises().size();i++)
+            {
+                temp.add(DataModel.exercises.get(DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getExercises().get(i)).getName());
+            }
+            adapter=new MyListAdapter(this,temp);
+            lvexr.setAdapter(adapter);
+            lvexr.setOnItemClickListener(this);
+        }
 
-        tvFeeback.setText(DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getFeedback());
+
+        //tvFeeback.setText(DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getFeedback());
         removePatient.setOnClickListener(this);
         addExer.setOnClickListener(this);
     }
@@ -149,6 +172,14 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
         Intent i = new Intent(this, DoctorsPatientActivity.class);
         //i.putExtra("WE", getIntent().getIntExtra("WE", 0));
         startActivity(i);
+        finish();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Intent intent1 = new Intent(this, ExerciseActivity.class);
+        intent1.putExtra("EXSIZE", i);
+        startActivity(intent1);
         finish();
     }
 }

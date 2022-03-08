@@ -3,6 +3,7 @@ package com.example.knee_must;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,14 +12,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class ExerciseActivity extends AppCompatActivity implements IView, View.OnClickListener{
     TextView tvexname,tvlink,tvmessage;
-    Button deleteExer;
+    Button deleteExer,finish,finishdialog;
+    RadioGroup radiogroup;
+    RadioButton radiobutton1;
     SharedPreference sharedPref;
     AlertDialog.Builder builder;
+    Dialog feedbackDialog;
     private IPrestenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +33,16 @@ public class ExerciseActivity extends AppCompatActivity implements IView, View.O
         super.onCreate(savedInstanceState);
         this.presenter=new Presenter(this);
         setContentView(R.layout.activity_exercise);
+        radiogroup=(RadioGroup)findViewById(R.id.radiogroup);
         deleteExer=findViewById(R.id.deleteExer);
+        finish=findViewById(R.id.finishex);
         tvexname = findViewById(R.id.exname);
         tvlink=findViewById(R.id.tvlink);
         tvmessage=findViewById(R.id.tvmessage);
         tvexname.setText(DataModel.exercises.get(getIntent().getIntExtra("EXSIZE",0)).getName());
         tvlink.setText(DataModel.exercises.get(getIntent().getIntExtra("EXSIZE",0)).getDescription());
         deleteExer.setOnClickListener(this);
+        finish.setOnClickListener(this);
 
     }
     @Override
@@ -65,6 +74,44 @@ public class ExerciseActivity extends AppCompatActivity implements IView, View.O
             alert.setTitle("Delete Exercise");
             alert.show();
         }
+        if(view==finish)
+        {
+            OpenFeedbackdialog();
+        }
+
+
+    }
+    public void OpenFeedbackdialog(){
+        feedbackDialog=new Dialog(this);
+        feedbackDialog.setContentView(R.layout.custom_feedback_dialog);
+        feedbackDialog.setCancelable(true);
+        radiogroup=feedbackDialog.findViewById(R.id.radiogroup);
+
+        finishdialog=feedbackDialog.findViewById(R.id.finishexdialog);
+        finishdialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view==finishdialog)
+                {
+                    int selectedId=radiogroup.getCheckedRadioButtonId();
+                    if(selectedId==-1)
+                        Toast.makeText(ExerciseActivity.this, "Feedback!!",Toast.LENGTH_SHORT).show();
+                    else
+                    {
+                        radiobutton1=feedbackDialog.findViewById(selectedId);
+                        Toast.makeText(ExerciseActivity.this,radiobutton1.getText(),Toast.LENGTH_SHORT).show();
+                        DataModel.patients.get(sharedPref.GetFirebaseNum()).getFeedback().add(DataModel.exercises.get(getIntent().getIntExtra("EXSIZE",0)).getName()+": "+radiobutton1.getText());
+                        DataModel.savePatients();
+                        feedbackDialog.dismiss();
+                        restartapp();
+                    }//
+
+                }
+            }
+        });
+        feedbackDialog.show();
+
+
 
     }
     @Override
@@ -161,6 +208,12 @@ public class ExerciseActivity extends AppCompatActivity implements IView, View.O
     @Override
     public void Displaymessage(String st) {
         tvmessage.setText(st);
+    }
+    void restartapp() {
+        Intent i = new Intent(this,ExercisesListActivity.class);
+        //i.putExtra("WE", getIntent().getIntExtra("WE", 0));
+        startActivity(i);
+        finish();
     }
 
 
