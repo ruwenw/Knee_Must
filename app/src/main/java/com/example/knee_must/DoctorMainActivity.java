@@ -37,7 +37,7 @@ ArrayList<String> arypatientlist;
         builder = new AlertDialog.Builder(this);
         ArrayList<String> temp = new ArrayList<>();
         lvpatients = findViewById(R.id.lvpatients);
-        if( DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(0)==-1){
+        if( DataModel.doctors.get(0).getPatient(0)==-1){
             temp.add("No Patients yet");
             //&&DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().size()==1)
             adapter=new MyListAdapter(this,temp);

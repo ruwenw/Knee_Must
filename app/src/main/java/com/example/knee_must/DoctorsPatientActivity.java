@@ -20,13 +20,14 @@ import java.util.ArrayList;
 public class DoctorsPatientActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 TextView tvFeeback;
 ListView lvexr;
-EditText exerName,exerDescription,name;
+EditText exerName,exerDescription,name,etbeginner,etintermediate,etexpert,etlevel,etankle;
     ArrayList<String> aryexlist;
     MyListAdapter adapter;
 Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
     SharedPreference sharedPref;
     AlertDialog.Builder builder;
     Dialog exerDialog,newexerDialog;
+    int level=0;
     //int patientnum=DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(getIntent().getIntExtra("Patient",0));
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +105,20 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
 
         exerDialog.setCancelable(true);
         addnewExer=exerDialog.findViewById(R.id.addnewExer);
+        etlevel=exerDialog.findViewById(R.id.level);
+        if(etlevel.getText().toString()=="beginner")
+        {
+             level=0;
+        }else{
+            if(etlevel.getText().toString()=="intermediate"){
+                 level=1;
+            }else
+            {
+                 level=2;
+            }
+        }
+        //Not finished!!!
+        //etankle=exerDialog.findViewById(R.id.ankle);
         addnewExer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,9 +139,9 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
                         if(DataModel.exercises.get(i).getName().equals(name.getText().toString())){
                             if(DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getExercises().get(0)==-1)
                             {
-                                DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getExercises().set(0,i);
+                                DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getExercises().set(0,(i*10)+level);
                             }else{
-                                DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getExercises().add(i);
+                                DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getExercises().add((i*10)+level);
                             }
                             DataModel.savePatients();
                             exerDialog.dismiss();
@@ -150,16 +165,27 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
         newexerDialog.setCancelable(true);
         exerName= newexerDialog.findViewById(R.id.exerName);
         exerDescription = newexerDialog.findViewById(R.id.exerDescription);
+        etintermediate=newexerDialog.findViewById(R.id.etintermediate);
+        int intermediate=Integer.parseInt(etintermediate.getText().toString());
+        etbeginner=newexerDialog.findViewById(R.id.etbeginner);
+        int beginner=Integer.parseInt(etbeginner.getText().toString());
+        etexpert=newexerDialog.findViewById(R.id.etexpert);
+        int expert=Integer.parseInt(etexpert.getText().toString());
         submitaddnewExer = newexerDialog.findViewById(R.id.submitaddnewExer);
-
+        Toast.makeText(getApplicationContext(), beginner,
+                Toast.LENGTH_SHORT).show();
 
         submitaddnewExer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(v ==  submitaddnewExer)
                 {
+                    ArrayList<ExerciseLevel> levels=new ArrayList<ExerciseLevel>(3);
+                    levels.add(0,new ExerciseLevel("beginner",beginner));
+                    levels.add(1,new ExerciseLevel("intermediate",intermediate));
+                    levels.add(2,new ExerciseLevel("expert",expert));
                     DataModel.exercises.add(new Exercise(exerName.getText().toString(),
-                                    exerDescription.getText().toString()));
+                                    exerDescription.getText().toString(),levels));
                     DataModel.saveExercieses();
                     newexerDialog.dismiss();
                     restartapp();

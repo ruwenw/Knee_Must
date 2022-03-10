@@ -68,7 +68,7 @@ int position=0;
                 return imageview;
             }
         });
-        /*if(imageUris.isEmpty())
+        if(imageUris.isEmpty())
         {
             Toast.makeText(FeedbackActivity.this,"No images yet...",Toast.LENGTH_SHORT).show();
         }else
@@ -76,7 +76,7 @@ int position=0;
 
             imagessw.setImageURI(imageUris.get(0));
         }
-*/
+
         btcamera.setOnClickListener(this);
         submitfeba.setOnClickListener(this);
         nextimg.setOnClickListener(this);
@@ -161,9 +161,10 @@ int position=0;
         }
         if(resultCode==RESULT_OK&&requestCode==1)
         {//not finished !!!
-            AlertDialog.Builder builder=new AlertDialog.Builder(this);
-            Uri imageUri = data.getData();
-            imageUris.add(imageUri);
+            //AlertDialog.Builder builder=new AlertDialog.Builder(this);
+            Uri imageUri1 = data.getData();
+            imageUris.add(imageUri1);
+            Toast.makeText(FeedbackActivity.this,imageUris.size(),Toast.LENGTH_SHORT).show();
             imagessw.setImageURI(imageUris.get(0));
             position=0;
             /*VideoView videoview=new VideoView(this);
