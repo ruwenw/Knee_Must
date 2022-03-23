@@ -166,20 +166,22 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
         exerName= newexerDialog.findViewById(R.id.exerName);
         exerDescription = newexerDialog.findViewById(R.id.exerDescription);
         etintermediate=newexerDialog.findViewById(R.id.etintermediate);
-        int intermediate=Integer.parseInt(etintermediate.getText().toString());
+
         etbeginner=newexerDialog.findViewById(R.id.etbeginner);
-        int beginner=Integer.parseInt(etbeginner.getText().toString());
+
         etexpert=newexerDialog.findViewById(R.id.etexpert);
-        int expert=Integer.parseInt(etexpert.getText().toString());
+
         submitaddnewExer = newexerDialog.findViewById(R.id.submitaddnewExer);
-        Toast.makeText(getApplicationContext(), beginner,
-                Toast.LENGTH_SHORT).show();
+
 
         submitaddnewExer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(v ==  submitaddnewExer)
                 {
+                    int intermediate=Integer.parseInt(etintermediate.getText().toString());
+                    int beginner=Integer.parseInt(etbeginner.getText().toString());
+                    int expert=Integer.parseInt(etexpert.getText().toString());
                     ArrayList<ExerciseLevel> levels=new ArrayList<ExerciseLevel>(3);
                     levels.add(0,new ExerciseLevel("beginner",beginner));
                     levels.add(1,new ExerciseLevel("intermediate",intermediate));

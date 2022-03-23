@@ -136,6 +136,10 @@ SharedPreference sharedPref;
             Intent intent = new Intent(this, DeleteActivity.class);
             startActivityForResult(intent, 0);
             return true;
+        }else if (id == R.id.action_CallDoc) {
+            Intent intent = new Intent(this, CallActivity.class);
+            startActivityForResult(intent, 0);
+            return true;
         }else if (id == R.id.action_logout) {
             builder.setMessage("Do you want to logout?")
                     .setCancelable(false)

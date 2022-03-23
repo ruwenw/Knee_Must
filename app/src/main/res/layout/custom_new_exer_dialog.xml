@@ -32,6 +32,7 @@
         />
     <EditText
         android:layout_marginTop="10dp"
+        android:inputType="number"
         android:id="@+id/etintermediate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,6 +41,7 @@
         />
     <EditText
         android:layout_marginTop="10dp"
+        android:inputType="number"
         android:id="@+id/etexpert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

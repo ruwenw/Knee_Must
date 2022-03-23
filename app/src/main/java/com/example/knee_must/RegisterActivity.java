@@ -17,7 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
-EditText etusername,etpassword,fname,lname,etid;
+EditText etusername,etpassword,fname,lname,etid,etphonenumber;
 TextView notfdoctor;
 CheckBox isdoctor;
 Button submit;
@@ -34,6 +34,7 @@ SharedPreference sharedPref;
         lname=findViewById(R.id.etLName);
         etusername=findViewById(R.id.etusername);
         etpassword=findViewById(R.id.etpassword);
+        etphonenumber=findViewById(R.id.etphonenumber);
         etid=findViewById(R.id.etid);
         notfdoctor=findViewById(R.id.notfdoctor);
         isdoctor=findViewById(R.id.cbndoctor);
@@ -89,7 +90,7 @@ SharedPreference sharedPref;
                     ArrayList<Integer> a1=new ArrayList<Integer>();
                     a1.add(-1);
                     Doctor d=new Doctor(etusername.getText().toString(), etpassword.getText().toString(),
-                            fname.getText().toString(),a1, lname.getText().toString());
+                            fname.getText().toString(),a1, lname.getText().toString(),etphonenumber.getText().toString());
                     DataModel.doctors.add(d);
                     DataModel.saveDoctors();
                     sharedPref.SetUsername(etusername.getText().toString());
