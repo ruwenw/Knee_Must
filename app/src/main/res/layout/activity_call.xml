@@ -24,12 +24,30 @@
         android:src="@drawable/ic_baseline_local_phone_24" />
 
     <Button
+        android:id="@+id/btncallsaved"
+        android:layout_width="135dp"
+        android:layout_height="45dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="60dp"
+        android:text="emty" />
+    <Button
         android:id="@+id/btncalldoc"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="Call Doctor" />
+
+    <Button
+        android:id="@+id/btnsavenumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="194dp"
+        android:text="Save Number" />
 
 </RelativeLayout>
