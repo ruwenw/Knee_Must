@@ -45,7 +45,7 @@ public class  ExercisesListActivity extends AppCompatActivity implements Adapter
         }else{
             for (int i = 0 ; i < DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().size();i++)
             {
-                temp.add(DataModel.exercises.get((DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().get(i))/10).getName());
+                temp.add(DataModel.exercises.get((DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().get(i))/10-1).getName());
             }
             adapter=new MyListAdapter(this,temp);
             lvexr.setAdapter(adapter);
@@ -159,9 +159,7 @@ public class  ExercisesListActivity extends AppCompatActivity implements Adapter
         MenuItem item;
         item = menu.getItem(0);
         item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        item = menu.getItem(3);
-        item.setEnabled(false);
-        item.setVisible(false);
+
         item = menu.getItem(1);
         item.setEnabled(false);
         item.setVisible(false);
@@ -201,6 +199,19 @@ public class  ExercisesListActivity extends AppCompatActivity implements Adapter
         } else if (id == R.id.action_register) {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivityForResult(intent, 0);
+            return true;
+        }else if (id == R.id.action_GoHome) {
+
+            if(sharedPref.IsDoctor())
+            {
+                Intent intent = new Intent(this, DoctorMainActivity.class);
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
+
+            //finish();
             return true;
         } else if (id == R.id.action_logout) {
             builder.setMessage("Do you want to logout?")

@@ -11,34 +11,12 @@
         android:textSize="25dp"
         android:text="FeedBack: "
         />
-    <RadioGroup
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:id="@+id/radiogroup">
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Great"
-            android:id="@+id/great"
-            android:textSize="20dp"
-            android:checked="false"/>
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:id="@+id/ok"
-            android:text="OK"
-            android:checked="false"/>
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bad"
-            android:id="@+id/bad"
-            android:textSize="20dp"
-            android:checked="false"/>
+        android:id="@+id/etfeedback"
+        android:hint="Enter Feedback"/>
 
-    </RadioGroup>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

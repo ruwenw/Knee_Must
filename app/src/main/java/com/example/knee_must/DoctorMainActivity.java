@@ -37,7 +37,7 @@ ArrayList<String> arypatientlist;
         builder = new AlertDialog.Builder(this);
         ArrayList<String> temp = new ArrayList<>();
         lvpatients = findViewById(R.id.lvpatients);
-        if( DataModel.doctors.get(0).getPatient(0)==-1){
+        if( DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(0)==-1){
             temp.add("No Patients yet");
             //&&DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().size()==1)
             adapter=new MyListAdapter(this,temp);
@@ -196,6 +196,10 @@ ArrayList<String> arypatientlist;
         }
         else if (id == R.id.action_SetTimer) {
             Intent intent = new Intent(this, NotificationActivity.class);
+            startActivityForResult(intent, 0);
+            return true;
+        }else if (id == R.id.action_Back) {
+            Intent intent = new Intent(this, DoctorsPatientActivity.class);
             startActivityForResult(intent, 0);
             return true;
         }else if (id == R.id.action_Delete) {

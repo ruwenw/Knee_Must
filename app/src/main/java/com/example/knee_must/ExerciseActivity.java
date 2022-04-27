@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 public class ExerciseActivity extends AppCompatActivity implements IView, View.OnClickListener{
     TextView tvexname,tvlink,tvmessage;
+    EditText etfeedback;
     Button deleteExer,finish,finishdialog;
     RadioGroup radiogroup;
     RadioButton radiobutton1;
@@ -33,7 +35,6 @@ public class ExerciseActivity extends AppCompatActivity implements IView, View.O
         super.onCreate(savedInstanceState);
         this.presenter=new Presenter(this);
         setContentView(R.layout.activity_exercise);
-        radiogroup=(RadioGroup)findViewById(R.id.radiogroup);
         deleteExer=findViewById(R.id.deleteExer);
         finish=findViewById(R.id.finishex);
         tvexname = findViewById(R.id.exname);
@@ -85,27 +86,17 @@ public class ExerciseActivity extends AppCompatActivity implements IView, View.O
         feedbackDialog=new Dialog(this);
         feedbackDialog.setContentView(R.layout.custom_feedback_dialog);
         feedbackDialog.setCancelable(true);
-        radiogroup=feedbackDialog.findViewById(R.id.radiogroup);
-
+        etfeedback=feedbackDialog.findViewById(R.id.etfeedback);
         finishdialog=feedbackDialog.findViewById(R.id.finishexdialog);
         finishdialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(view==finishdialog)
                 {
-                    int selectedId=radiogroup.getCheckedRadioButtonId();
-                    if(selectedId==-1)
-                        Toast.makeText(ExerciseActivity.this, "Feedback!!",Toast.LENGTH_SHORT).show();
-                    else
-                    {
-                        radiobutton1=feedbackDialog.findViewById(selectedId);
-                        Toast.makeText(ExerciseActivity.this,radiobutton1.getText(),Toast.LENGTH_SHORT).show();
-                        DataModel.patients.get(sharedPref.GetFirebaseNum()).getFeedback().add(DataModel.exercises.get(getIntent().getIntExtra("EXSIZE",0)).getName()+": "+radiobutton1.getText());
-                        DataModel.savePatients();
-                        feedbackDialog.dismiss();
-                        restartapp();
-                    }//
-
+                    DataModel.patients.get(sharedPref.GetFirebaseNum()).getFeedback().set(getIntent().getIntExtra("EXSIZE",0),etfeedback.getText().toString());
+                    DataModel.savePatients();
+                    feedbackDialog.dismiss();
+                    restartapp();
                 }
             }
         });
@@ -118,18 +109,16 @@ public class ExerciseActivity extends AppCompatActivity implements IView, View.O
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.main_menu,menu);
-
+        MenuItem item;
         for(int i=0;i<menu.size();i++)
         {
-            MenuItem item= menu.getItem(i);
+             item= menu.getItem(i);
 
         }
-        MenuItem item;
+
         item = menu.getItem(0);
         item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        item = menu.getItem(3);
-        item.setEnabled(false);
-        item.setVisible(false);
+
         item = menu.getItem(1);
         item.setEnabled(false);
         item.setVisible(false);
@@ -167,8 +156,27 @@ public class ExerciseActivity extends AppCompatActivity implements IView, View.O
             startActivityForResult(intent, 0);
             return true;
         } else if (id == R.id.action_Back) {
-            Intent intent = new Intent(this, ExercisesListActivity.class);
-            startActivityForResult(intent, 0);
+            if(sharedPref.IsDoctor())
+            {
+                Intent intent = new Intent(this, DoctorsPatientActivity.class);
+                startActivityForResult(intent, 0);
+            }else{
+                Intent intent = new Intent(this, ExercisesListActivity.class);
+                startActivity(intent);
+            }
+
+        }else if (id == R.id.action_GoHome) {
+
+            if(sharedPref.IsDoctor())
+            {
+                Intent intent = new Intent(this, DoctorMainActivity.class);
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
+
+            //finish();
             return true;
         }else if (id == R.id.action_logout) {
             builder.setMessage("Do you want to logout?")

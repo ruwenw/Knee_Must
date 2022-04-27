@@ -24,12 +24,11 @@
         android:text="Patients Daily Feedback:"
         android:layout_marginTop="25dp"
         />
-    <TextView
-        android:layout_width="300dp"
+
+    <ListView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Feedback"
-        android:textSize="20dp"
-        android:id="@+id/tvfeedback"
+        android:id="@+id/lvfeedb"
         />
     <Button
         android:layout_width="wrap_content"

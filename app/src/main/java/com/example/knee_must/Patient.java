@@ -42,7 +42,9 @@ public class  Patient extends Person{
     public ArrayList<Integer> getExercises() {
         return exercises;
     }
-
+    public void setExercisesi(int index,int x) {
+        this.exercises.set(index,x);
+    }
     public void setExercises(ArrayList<Integer> exercises) {
         this.exercises = exercises;
     }
