@@ -6,6 +6,15 @@ public class  Patient extends Person{
     private String id;
     private ArrayList<Integer> exercises;
     private ArrayList<String> feedback;
+    private ArrayList<ArrayList<Integer>> emg;
+
+    public ArrayList<ArrayList<Integer>> getEmg() {
+        return emg;
+    }
+
+    public void setEmg(ArrayList<ArrayList<Integer>> emg) {
+        this.emg = emg;
+    }
 
     public Patient(){
         super();
@@ -18,10 +27,14 @@ public class  Patient extends Person{
         this.id = id;
         this.exercises = exercises;
         this.feedback=feedbacks;
+        this.emg=new ArrayList<ArrayList<Integer>>(1);
 
     }
 
 
+    public void setFeedback(ArrayList<String> feedback) {
+        this.feedback = feedback;
+    }
 
     public String getId() {
         return id;
@@ -35,9 +48,7 @@ public class  Patient extends Person{
         return feedback;
     }
 
-    //public void setFeedback(String feedback) {
-       //this.feedback = feedback;
-    //}
+
 
     public ArrayList<Integer> getExercises() {
         return exercises;

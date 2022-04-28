@@ -40,8 +40,8 @@ public class ExerciseActivity extends AppCompatActivity implements IView, View.O
         tvexname = findViewById(R.id.exname);
         tvlink=findViewById(R.id.tvlink);
         tvmessage=findViewById(R.id.tvmessage);
-        tvexname.setText(DataModel.exercises.get(getIntent().getIntExtra("EXSIZE",0)).getName());
-        tvlink.setText(DataModel.exercises.get(getIntent().getIntExtra("EXSIZE",0)).getDescription());
+        tvexname.setText(DataModel.exercises.get(getIntent().getIntExtra("EXSIZE",0)-1).getName());
+        tvlink.setText(DataModel.exercises.get(getIntent().getIntExtra("EXSIZE",0)-1).getDescription());
         deleteExer.setOnClickListener(this);
         finish.setOnClickListener(this);
 
@@ -93,7 +93,7 @@ public class ExerciseActivity extends AppCompatActivity implements IView, View.O
             public void onClick(View view) {
                 if(view==finishdialog)
                 {
-                    DataModel.patients.get(sharedPref.GetFirebaseNum()).getFeedback().set(getIntent().getIntExtra("EXSIZE",0),etfeedback.getText().toString());
+                    DataModel.patients.get(sharedPref.GetFirebaseNum()).getFeedback().add(getIntent().getIntExtra("EXSIZE",0)+ etfeedback.getText().toString());
                     DataModel.savePatients();
                     feedbackDialog.dismiss();
                     restartapp();

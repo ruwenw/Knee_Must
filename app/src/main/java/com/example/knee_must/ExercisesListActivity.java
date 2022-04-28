@@ -28,7 +28,7 @@ public class  ExercisesListActivity extends AppCompatActivity implements Adapter
     SharedPreference sharedPref;
     AlertDialog.Builder builder;
     Dialog exerDialog;
-
+int x=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPref = new SharedPreference(this);
@@ -45,7 +45,8 @@ public class  ExercisesListActivity extends AppCompatActivity implements Adapter
         }else{
             for (int i = 0 ; i < DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().size();i++)
             {
-                temp.add(DataModel.exercises.get((DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().get(i))/10-1).getName());
+                x=(DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().get(i))/10-1;
+                temp.add(DataModel.exercises.get(x).getName());
             }
             adapter=new MyListAdapter(this,temp);
             lvexr.setAdapter(adapter);
@@ -62,7 +63,7 @@ public class  ExercisesListActivity extends AppCompatActivity implements Adapter
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent1 = new Intent(this, ExerciseActivity.class);
-        intent1.putExtra("EXSIZE", i);
+        intent1.putExtra("EXSIZE", x+1);
         startActivity(intent1);
         finish();
 

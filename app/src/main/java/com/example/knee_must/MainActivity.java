@@ -86,7 +86,7 @@ SharedPreference sharedPref;
         }*/
         item = menu.getItem(0);
         //item.setTitle(sharedPref.GetFname());
-        try {
+        /*try {
             in=openFileInput("details1");
             byte[]buffer=new byte[4096];
             try {
@@ -105,7 +105,14 @@ SharedPreference sharedPref;
         catch (FileNotFoundException e)
         {
             e.printStackTrace();
+        }*/
+        if (sharedPref.GetFname().equals("")) {
+            item = menu.getItem(0);
+            item.setEnabled(false);
+            item.setVisible(false);
         }
+        item = menu.getItem(0);
+        item.setTitle(sharedPref.GetFname());
 
 
 

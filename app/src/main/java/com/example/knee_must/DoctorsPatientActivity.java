@@ -57,8 +57,16 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
             lvexr.setAdapter(adapter);
             lvexr.setOnItemClickListener(this);
             ArrayList<String> temp2 = new ArrayList<>();
+            String str=null;
+
             for (int i = 0 ; i < DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getFeedback().size();i++){
-                temp2.add(DataModel.exercises.get((DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getExercises().get(i))/10-1).getName()+": "+DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getFeedback().get((DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getExercises().get(i))/10-1));
+                //if(DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getFeedback().get((DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getExercises().get(i))/10-1)!=null) {
+                    str=DataModel.patients.get(getIntent().getIntExtra("Patient", 0)).getFeedback().get(i);
+                    Integer x= Character.getNumericValue(str.charAt(0))-1;
+                    str=str.substring(1);
+               // DataModel.patients.get(getIntent().getIntExtra("Patient", 0)).getFeedback().get((DataModel.patients.get(getIntent().getIntExtra("Patient", 0)).getExercises().get(i)) / 10 - 1)
+                    temp2.add(DataModel.exercises.get(x).getName() + ": " + str);
+
             }
             adapter2=new MyListAdapter(this,temp2);
             lvfeedb.setAdapter((adapter2));
@@ -149,9 +157,9 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
                         if(DataModel.exercises.get(i).getName().equals(name.getText().toString())){
                             if(DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getExercises().get(0)==-1)
                             {
-                                DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getExercises().set(0,(i*10)+level);
+                                DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getExercises().set(0,((i+1)*10)+level);
                             }else{
-                                DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getExercises().add((i*10)+level);
+                                DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getExercises().add(((i+1)*10)+level);
                             }
                             DataModel.savePatients();
                             exerDialog.dismiss();
