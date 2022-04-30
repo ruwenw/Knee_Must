@@ -153,18 +153,17 @@ ArrayList<String> arypatientlist;
         MenuItem item;
         item = menu.getItem(0);
         item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        item = menu.getItem(3);
-        item.setEnabled(false);
-        item.setVisible(false);
         item = menu.getItem(1);
         item.setEnabled(false);
         item.setVisible(false);
-        item = menu.getItem(2);
+        item = menu.getItem(4);
         item.setEnabled(false);
         item.setVisible(false);
-        item = menu.getItem(6);
+        item = menu.getItem(5);
         item.setEnabled(false);
         item.setVisible(false);
+
+
 
 
         if (sharedPref.GetFname().equals("")) {
@@ -184,26 +183,8 @@ ArrayList<String> arypatientlist;
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_login) {
-            //Intent intent = new Intent(this, LoginActivity.class);
-            //startActivityForResult(intent, 0);
-            Toast.makeText(this,"You are already loged in",Toast.LENGTH_LONG).show();
-            return true;
-        }  else if (id == R.id.action_register) {
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivityForResult(intent, 0);
-            return true;
-        }
-        else if (id == R.id.action_SetTimer) {
-            Intent intent = new Intent(this, NotificationActivity.class);
-            startActivityForResult(intent, 0);
-            return true;
-        }else if (id == R.id.action_Back) {
-            Intent intent = new Intent(this, DoctorsPatientActivity.class);
-            startActivityForResult(intent, 0);
-            return true;
-        }else if (id == R.id.action_Delete) {
-            Intent intent = new Intent(this, DeleteActivity.class);
+         if (id == R.id.action_Back) {
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivityForResult(intent, 0);
             return true;
         }else if (id == R.id.action_logout) {

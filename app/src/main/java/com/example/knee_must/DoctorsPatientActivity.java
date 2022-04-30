@@ -14,20 +14,25 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class DoctorsPatientActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
-TextView tvFeeback;
-ListView lvexr,lvfeedb;
-EditText exerName,exerDescription,name,etbeginner,etintermediate,etexpert,etlevel,etankle;
-    ArrayList<String> aryexlist;
+
+    ListView lvexr,lvfeedb;
+    EditText exerName,exerDescription,name,etbeginner,etintermediate,etexpert;
+
     MyListAdapter adapter,adapter2;
-Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
+    Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer,btnemg;
     SharedPreference sharedPref;
     AlertDialog.Builder builder;
+    RadioGroup rbg;
+    RadioButton rblevel;
     Dialog exerDialog,newexerDialog;
     int level=0;
     //int patientnum=DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatients().get(getIntent().getIntExtra("Patient",0));
@@ -36,9 +41,10 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctors_patient);
         sharedPref = new SharedPreference(this);
-        builder = new AlertDialog.Builder(this);
+        builder = new AlertDialog.Builder(this);//rbg=exerDialog.findViewById(R.id.rbg);
 
         removePatient=findViewById(R.id.removePatient);
+        btnemg=findViewById(R.id.btnemg);
         addExer=findViewById(R.id.addPaExer);
         ArrayList<String> temp = new ArrayList<>();
         lvexr = findViewById(R.id.lvexer);
@@ -58,23 +64,23 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
             lvexr.setOnItemClickListener(this);
             ArrayList<String> temp2 = new ArrayList<>();
             String str=null;
-
+            int x=0;
             for (int i = 0 ; i < DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getFeedback().size();i++){
-                //if(DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getFeedback().get((DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getExercises().get(i))/10-1)!=null) {
-                    str=DataModel.patients.get(getIntent().getIntExtra("Patient", 0)).getFeedback().get(i);
-                    Integer x= Character.getNumericValue(str.charAt(0))-1;
-                    str=str.substring(1);
-               // DataModel.patients.get(getIntent().getIntExtra("Patient", 0)).getFeedback().get((DataModel.patients.get(getIntent().getIntExtra("Patient", 0)).getExercises().get(i)) / 10 - 1)
+                if(!DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getFeedback().get(i).equals("null")) {
+                    str = DataModel.patients.get(getIntent().getIntExtra("Patient", 0)).getFeedback().get(i);
+                    x = (DataModel.patients.get(getIntent().getIntExtra("Patient", 0)).getExercises().get(i) / 10) - 1;
+                    //Integer x= Character.getNumericValue(str.charAt(0))-1;
+                    //str=str.substring(1);
+                    // DataModel.patients.get(getIntent().getIntExtra("Patient", 0)).getFeedback().get((DataModel.patients.get(getIntent().getIntExtra("Patient", 0)).getExercises().get(i)) / 10 - 1)
                     temp2.add(DataModel.exercises.get(x).getName() + ": " + str);
+                }
 
             }
             adapter2=new MyListAdapter(this,temp2);
+
             lvfeedb.setAdapter((adapter2));
         }
-
-
-
-        //tvFeeback.setText(DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getFeedback());
+        btnemg.setOnClickListener(this);
         removePatient.setOnClickListener(this);
         addExer.setOnClickListener(this);
     }
@@ -113,30 +119,24 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
             OpenAddExerDialog();
 
         }
+        if(view==btnemg){
+            Intent i = new Intent(getApplicationContext(), EMGActivity.class);
+            i.putExtra("Patientnum",getIntent().getIntExtra("Patient",0));
+            startActivity(i);
+        }
 
 
     }
     public void OpenAddExerDialog() {
         exerDialog = new Dialog(this);
         exerDialog.setContentView(R.layout.custom_exer_add_dialog);
-        //exerDialog.setTitle("Add Exercise");
+        exerDialog.setTitle("Add Exercise");
 
         exerDialog.setCancelable(true);
+        rbg=exerDialog.findViewById(R.id.rbg);
+        rblevel=exerDialog.findViewById(R.id.rbbeginner);
+
         addnewExer=exerDialog.findViewById(R.id.addnewExer);
-        etlevel=exerDialog.findViewById(R.id.level);
-        if(etlevel.getText().toString()=="beginner")
-        {
-             level=0;
-        }else{
-            if(etlevel.getText().toString()=="intermediate"){
-                 level=1;
-            }else
-            {
-                 level=2;
-            }
-        }
-        //Not finished!!!
-        //etankle=exerDialog.findViewById(R.id.ankle);
         addnewExer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,6 +153,9 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
             public void onClick(View view) {
                 if(view ==  submitaddExer)
                 {
+                    int selectedId=rbg.getCheckedRadioButtonId();
+                    rblevel=exerDialog.findViewById(selectedId);
+                    level=Integer.parseInt(rblevel.getText().toString())-1;
                     for(int i=0;i<DataModel.exercises.size();i++){
                         if(DataModel.exercises.get(i).getName().equals(name.getText().toString())){
                             if(DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getExercises().get(0)==-1)
@@ -160,7 +163,9 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
                                 DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getExercises().set(0,((i+1)*10)+level);
                             }else{
                                 DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getExercises().add(((i+1)*10)+level);
+                                DataModel.patients.get(DataModel.doctors.get(sharedPref.GetFirebaseNum()).getPatient(getIntent().getIntExtra("Patient",0))).getFeedback().add("null");
                             }
+
                             DataModel.savePatients();
                             exerDialog.dismiss();
                             restartapp();
@@ -200,10 +205,14 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
                     int intermediate=Integer.parseInt(etintermediate.getText().toString());
                     int beginner=Integer.parseInt(etbeginner.getText().toString());
                     int expert=Integer.parseInt(etexpert.getText().toString());
-                    ArrayList<ExerciseLevel> levels=new ArrayList<ExerciseLevel>(3);
+                    /*ArrayList<ExerciseLevel> levels=new ArrayList<ExerciseLevel>(3);
                     levels.add(0,new ExerciseLevel("beginner",beginner));
                     levels.add(1,new ExerciseLevel("intermediate",intermediate));
-                    levels.add(2,new ExerciseLevel("expert",expert));
+                    levels.add(2,new ExerciseLevel("expert",expert));*/
+                    ArrayList<Integer> levels=new ArrayList<>(3);
+                    levels.add(beginner);
+                    levels.add(intermediate);
+                    levels.add(expert);
                     DataModel.exercises.add(new Exercise(exerName.getText().toString(),
                                     exerDescription.getText().toString(),levels));
                     DataModel.saveExercieses();
@@ -232,10 +241,11 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getExercises().remove(i);
+                        DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getFeedback().remove(i);
                         if(DataModel.patients.get(getIntent().getIntExtra("Patient",0)).getExercises().isEmpty())
                         {
                             ArrayList<Integer> a=new ArrayList<>(1);
-                            a.set(0,-1);
+                            a.add(-1);
                             DataModel.patients.get(getIntent().getIntExtra("Patient",0)).setExercises(a);
                         }
                         DataModel.savePatients();
@@ -273,14 +283,13 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
         MenuItem item;
         item = menu.getItem(0);
         item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        item =menu.getItem(3);
-        item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        item = menu.getItem(1);
+        item = menu.getItem(4);
         item.setEnabled(false);
         item.setVisible(false);
-        item = menu.getItem(2);
+        item = menu.getItem(5);
         item.setEnabled(false);
         item.setVisible(false);
+
 
 
         if (sharedPref.GetFname().equals("")) {
@@ -300,25 +309,8 @@ Button removePatient,addExer,addnewExer,submitaddExer,submitaddnewExer;
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_login) {
-            //Intent intent = new Intent(this, LoginActivity.class);
-            //startActivityForResult(intent, 0);
-            Toast.makeText(this,"You are already loged in",Toast.LENGTH_LONG).show();
-            return true;
-        }  else if (id == R.id.action_register) {
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivityForResult(intent, 0);
-            return true;
-        }else if (id == R.id.action_Back) {
+         if (id == R.id.action_Back) {
             Intent intent = new Intent(this, DoctorMainActivity.class);
-            startActivityForResult(intent, 0);
-            return true;
-        }else if (id == R.id.action_SetTimer) {
-            Intent intent = new Intent(this, NotificationActivity.class);
-            startActivityForResult(intent, 0);
-            return true;
-        }else if (id == R.id.action_Delete) {
-            Intent intent = new Intent(this, DeleteActivity.class);
             startActivityForResult(intent, 0);
             return true;
         }else if (id == R.id.action_GoHome) {

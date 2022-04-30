@@ -8,47 +8,31 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class EMGActivity extends AppCompatActivity {
+ListView lvemg;
+MyListAdapter adapter1;
 SharedPreference sharedPref;
     AlertDialog.Builder builder;
-    Button toexer;
-    TextView test;
-    InputStream in;
-    String str=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_emgactivity);
         sharedPref = new SharedPreference(this);
         builder = new AlertDialog.Builder(this);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //test=findViewById(R.id.test);
-        //test.setText("2314");
-        toexer=findViewById(R.id.toExercises);
-
-
-        toexer.setOnClickListener(this);
-    }
-    @Override
-    public void onClick(View view) {
-        if(view==toexer)
+        ArrayList<String> temp = new ArrayList<>();
+        lvemg = findViewById(R.id.lvemg);
+        for (int i = 0 ; i < DataModel.patients.get(getIntent().getIntExtra("Patientnum",0)).getEmg().size();i++)
         {
-            Intent intent = new Intent(this, ExercisesListActivity.class);
-            startActivity(intent);
+            temp.add(DataModel.patients.get(getIntent().getIntExtra("Patientnum",0)).getEmg().get(i).toString());
         }
-
-
-
+        adapter1=new MyListAdapter(this,temp);
+        lvemg.setAdapter(adapter1);
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -61,40 +45,12 @@ SharedPreference sharedPref;
         MenuItem item;
         item = menu.getItem(0);
         item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-        item = menu.getItem(1);
+        item = menu.getItem(4);
         item.setEnabled(false);
         item.setVisible(false);
-
-
-        /*
-        if (sharedPref.GetFname().equals("")) {
-            item = menu.getItem(0);
-            item.setEnabled(false);
-            item.setVisible(false);
-        }*/
-        //item = menu.getItem(0);
-        //item.setTitle(sharedPref.GetFname());
-        /*try {
-            in=openFileInput("details1");
-            byte[]buffer=new byte[4096];
-            try {
-                in.read(buffer);
-                str=new String(buffer);
-                in.close();
-                if(str!=null)
-                    item.setTitle(str);
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }*/
+        item = menu.getItem(5);
+        item.setEnabled(false);
+        item.setVisible(false);
         if (sharedPref.GetFname().equals("")) {
             item = menu.getItem(0);
             item.setEnabled(false);
@@ -102,8 +58,6 @@ SharedPreference sharedPref;
         }
         item = menu.getItem(0);
         item.setTitle(sharedPref.GetFname());
-
-
 
         return true;
 
@@ -113,17 +67,23 @@ SharedPreference sharedPref;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
         if (id == R.id.action_Back) {
-            Intent intent = new Intent(this, LoginActivity.class);
+            Intent intent = new Intent(this, DoctorMainActivity.class);
             startActivityForResult(intent, 0);
             return true;
-        }else if (id == R.id.action_SetTimer) {
-            Intent intent = new Intent(this, NotificationActivity.class);
-            startActivityForResult(intent, 0);
-            return true;
-        }else if (id == R.id.action_CallDoc) {
-            Intent intent = new Intent(this, CallActivity.class);
-            startActivityForResult(intent, 0);
+        }else if (id == R.id.action_GoHome) {
+
+            if(sharedPref.IsDoctor())
+            {
+                Intent intent = new Intent(this, DoctorMainActivity.class);
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
+
+            //finish();
             return true;
         }else if (id == R.id.action_logout) {
             builder.setMessage("Do you want to logout?")
@@ -154,6 +114,4 @@ SharedPreference sharedPref;
         }
         return true;
     }
-
-
 }

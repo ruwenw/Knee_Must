@@ -37,6 +37,10 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
         mTextView = findViewById(R.id.textView);
+        if(!sharedPref.getTimer().equals("null"))
+        {
+            mTextView.setText("Alarm set for: "+sharedPref.getTimer());
+        }
         buttonTimePicker = findViewById(R.id.button_timepicker);
         buttonTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +84,7 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
     private void updateTimeText(Calendar c) {
         String timeText = "Alarm set for: ";
         timeText += DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
-
+        sharedPref.setTimer(DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime()));
         mTextView.setText(timeText);
     }
 
@@ -98,6 +102,7 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
     }
 
     public void cancelAlarm() {
+        sharedPref.setTimer("null");
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this,MyBroadcastReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
@@ -116,7 +121,7 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         }
         MenuItem item;
 
-        item = menu.getItem(7);
+        item = menu.getItem(4);
         item.setEnabled(false);
         item.setVisible(false);
 
@@ -138,26 +143,30 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_login) {
-            //Intent intent = new Intent(this, LoginActivity.class);
-            //startActivityForResult(intent, 0);
-            Toast.makeText(this,"You are already loged in",Toast.LENGTH_LONG).show();
-            return true;
-        }  else if (id == R.id.action_register) {
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivityForResult(intent, 0);
-            return true;
-        } else if (id == R.id.action_SetTimer) {
+       if (id == R.id.action_SetTimer) {
             Intent intent = new Intent(this, NotificationActivity.class);
             startActivityForResult(intent, 0);
             return true;
-        }else if (id == R.id.action_Back) {
+        }else if (id == R.id.action_CallDoc) {
+           Intent intent = new Intent(this, CallActivity.class);
+           startActivityForResult(intent, 0);
+           return true;
+       }else if (id == R.id.action_Back) {
             Intent intent = new Intent(this, ExercisesListActivity.class);
             startActivityForResult(intent, 0);
             return true;
-        }else if (id == R.id.action_Delete) {
-            Intent intent = new Intent(this, DeleteActivity.class);
-            startActivityForResult(intent, 0);
+        }else if (id == R.id.action_GoHome) {
+
+            if(sharedPref.IsDoctor())
+            {
+                Intent intent = new Intent(this, DoctorMainActivity.class);
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
+
+            //finish();
             return true;
         }else if (id == R.id.action_logout) {
             builder.setMessage("Do you want to logout?")

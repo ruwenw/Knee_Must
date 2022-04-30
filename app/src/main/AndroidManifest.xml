@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Knee_Must">
         <activity
+            android:name=".EMGActivity"
+            android:exported="true" />
+        <activity
             android:name=".CallActivity"
             android:exported="true" />
         <activity
@@ -28,8 +31,6 @@
         <activity
             android:name=".NotificationActivity"
             android:exported="true" />
-        <activity android:name=".FeedbackActivity" />
-        <activity android:name=".DeleteActivity" />
         <activity
             android:name=".ExerciseActivity"
             android:exported="true" />

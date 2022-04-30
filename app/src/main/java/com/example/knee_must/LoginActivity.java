@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 EditText username;
 EditText password;
 Button btnlogin;
-Button btntodelete;
+
 Button btntoregister;
 SharedPreference sharedPref;
     AlertDialog.Builder builder;
@@ -41,10 +41,8 @@ SharedPreference sharedPref;
         password=findViewById(R.id.etpassw);
         btnlogin=findViewById(R.id.btnlogin);
         btntoregister=findViewById(R.id.btntoregister);
-        btntodelete=findViewById(R.id.todelete);
         sharedPref = new SharedPreference(this);
         btnlogin.setOnClickListener(this);
-        btntodelete.setOnClickListener(this);
         btntoregister.setOnClickListener(this);
         if(sharedPref.IsLogedIN())
         {
@@ -145,10 +143,7 @@ SharedPreference sharedPref;
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
         }
-        if (view == btntodelete) {
-            Intent intent = new Intent(this, DeleteActivity.class);
-            startActivity(intent);
-        }
+
 
 
     }
@@ -164,19 +159,13 @@ SharedPreference sharedPref;
 
         MenuItem item;
 
-        item = menu.getItem(1);
-        item.setEnabled(false);
-        item.setVisible(false);
+
         item = menu.getItem(4);
         item.setEnabled(false);
         item.setVisible(false);
         item = menu.getItem(5);
         item.setEnabled(false);
         item.setVisible(false);
-        item = menu.getItem(6);
-        item.setEnabled(false);
-        item.setVisible(false);
-
         if (sharedPref.GetFname().equals("")) {
             item = menu.getItem(0);
             item.setEnabled(false);
@@ -193,20 +182,19 @@ SharedPreference sharedPref;
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_login) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivityForResult(intent, 0);
-            //Toast.makeText(this,"you selected login",Toast.LENGTH_LONG).show();
-            return true;
-        }else if (id == R.id.action_SetTimer) {
+         if (id == R.id.action_SetTimer) {
             Intent intent = new Intent(this, NotificationActivity.class);
             startActivityForResult(intent, 0);
             return true;
-        } else if (id == R.id.action_register) {
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivityForResult(intent, 0);
-            return true;
-        } else if (id == R.id.action_GoHome) {
+        } else if (id == R.id.action_Back) {
+             if (sharedPref.IsLogedIN()) {
+                 Intent intent = new Intent(this, DoctorMainActivity.class);
+                 startActivityForResult(intent, 0);
+                 return true;
+             } else {
+                 Toast.makeText(this, "You need to login to continue", Toast.LENGTH_SHORT).show();
+             }
+         } else if (id == R.id.action_GoHome) {
             if (sharedPref.IsLogedIN()) {
                 if(sharedPref.IsDoctor())
                 {

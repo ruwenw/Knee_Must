@@ -9,45 +9,31 @@
             android:orderInCategory="100"
             />
         <item
-            android:id="@+id/action_login"
-            android:title="Login"
-            android:orderInCategory="200"
-
-            />
-        <item
-            android:id="@+id/action_register"
-            android:title="Register"
-            android:orderInCategory="300" />
-
-        <item
             android:id="@+id/action_GoHome"
             android:title="Home"
             android:icon="@drawable/ic_baseline_home_24"
-            android:orderInCategory="400"
+            android:orderInCategory="200"
             app:showAsAction="always"
             />
         <item
                 android:id="@+id/action_logout"
                 android:title="Logout"
-                android:orderInCategory="500"/>
-        <item
-            android:id="@+id/action_Delete"
-            android:title="Delete User"
-            android:orderInCategory="600"/>
+                android:orderInCategory="300"/>
+
         <item
             android:id="@+id/action_Back"
             android:title="Back"
             android:icon="@drawable/ic_baseline_arrow_back_24"
             app:showAsAction="always"
-            android:orderInCategory="700"/>
+            android:orderInCategory="400"/>
         <item
             android:id="@+id/action_SetTimer"
             android:title="Set Reminder"
-            android:orderInCategory="800"/>
+            android:orderInCategory="500"/>
         <item
             android:id="@+id/action_CallDoc"
             android:title="Call Doctor"
-            android:orderInCategory="900"/>
+            android:orderInCategory="600"/>
 
 
 </menu>

@@ -22,13 +22,7 @@
         android:layout_marginTop="20dp"
         android:text="Register"
         android:textSize="15dp" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete User"
-        android:id="@+id/todelete"
-        android:textSize="15dp"
-        android:layout_marginTop="20dp"/>
+
 
 
     <EditText

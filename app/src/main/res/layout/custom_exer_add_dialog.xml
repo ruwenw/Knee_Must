@@ -20,23 +20,38 @@
         android:hint=" Name "
         android:textSize="20dp"
         />
-    <EditText
-        android:layout_marginTop="10dp"
-        android:id="@+id/level"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint=" Level "
-        android:textSize="20dp"
-        />
-    <EditText
-        android:layout_marginTop="10dp"
-        android:inputType="number"
-        android:id="@+id/ankle"
+        android:textSize="25dp"
+        android:text="Level:"/>
+
+
+    <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint=" Change Angle "
-        android:textSize="20dp"
-        />
+        android:id="@+id/rbg">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:id="@+id/rbbeginner"
+            android:textSize="25dp"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:id="@+id/rbintermidate"
+            android:textSize="25dp"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:id="@+id/rbexpert"
+            android:textSize="25dp"/>
+
+    </RadioGroup>
+
 
 
     <Button

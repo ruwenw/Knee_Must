@@ -139,78 +139,8 @@ public class CallActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.setTitle("Save");
         alert.show();
-        /*AlertDialog alert = builder.create();
-        alert.setTitle("Logout");
-        alert.show();
-        SaveNumberDialog=new Dialog(this);
-        SaveNumberDialog.setContentView(R.layout.custom_savenumber_dialog);
-        SaveNumberDialog.setCancelable(true);
-        numname=SaveNumberDialog.findViewById(R.id.numname);
-        savenum=SaveNumberDialog.findViewById(R.id.savenum);
-        savenumnoname=SaveNumberDialog.findViewById(R.id.savenumnoname);
-
-        savenumnoname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(view==savenumnoname)
-                {
-                    try {
-                        strout = mEditTextNumber.getText().toString();
-                        out = openFileOutput("Numbers",MODE_PRIVATE|MODE_APPEND);
-                    }
-                    catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    if(strout.length()>0)
-                    {
-                        try {
-                            out.write(strout.getBytes(),0,strout.length());
-                            out.close();
-                            //Toast.makeText(this,"Your data saved to file",Toast.LENGTH_LONG).show();
-                        }
-                        catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    SaveNumberDialog.dismiss();
-                    restartapp();
 
 
-                }
-            }
-        });
-        savenum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(view==savenumnoname)
-                {
-                    try {
-                        strout = numname.getText().toString()+","+;
-                        out = openFileOutput("Numbers",MODE_PRIVATE|MODE_APPEND);
-                    }
-                    catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    if(strout.length()>0)
-                    {
-                        try {
-                            out.write(strout.getBytes(),0,strout.length());
-                            out.close();
-                            //Toast.makeText(this,"Your data saved to file",Toast.LENGTH_LONG).show();
-                        }
-                        catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    SaveNumberDialog.dismiss();
-
-
-
-                }
-            }
-        });
-        SaveNumberDialog.show();
-*/
     }
     void restartapp() {
         Intent i = new Intent(this,CallActivity.class);
@@ -262,12 +192,10 @@ public class CallActivity extends AppCompatActivity {
         item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
         item =menu.getItem(3);
         item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        item = menu.getItem(1);
+        item = menu.getItem(5);
         item.setEnabled(false);
         item.setVisible(false);
-        item = menu.getItem(2);
-        item.setEnabled(false);
-        item.setVisible(false);
+
 
 
         if (sharedPref.GetFname().equals("")) {
@@ -287,25 +215,12 @@ public class CallActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_login) {
-            //Intent intent = new Intent(this, LoginActivity.class);
-            //startActivityForResult(intent, 0);
-            Toast.makeText(this,"You are already loged in",Toast.LENGTH_LONG).show();
-            return true;
-        }  else if (id == R.id.action_register) {
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivityForResult(intent, 0);
-            return true;
-        }else if (id == R.id.action_Back) {
+         if (id == R.id.action_Back) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivityForResult(intent, 0);
             return true;
         }else if (id == R.id.action_SetTimer) {
             Intent intent = new Intent(this, NotificationActivity.class);
-            startActivityForResult(intent, 0);
-            return true;
-        }else if (id == R.id.action_Delete) {
-            Intent intent = new Intent(this, DeleteActivity.class);
             startActivityForResult(intent, 0);
             return true;
         }else if (id == R.id.action_GoHome) {

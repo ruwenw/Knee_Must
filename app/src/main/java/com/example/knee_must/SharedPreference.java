@@ -41,6 +41,18 @@ public class SharedPreference {
         return is;
 
     }
+    public void setTimer(String time)
+    {
+        SharedPreferences.Editor editor = mySharedPrefrences.edit();
+        editor.putString("Timertime",time);
+        editor.commit();
+    }
+    public String getTimer()
+    {
+        String timer=mySharedPrefrences.getString("Timertime","null");
+        return timer;
+    }
+
 
     public String GetUsername() {
         String user = mySharedPrefrences.getString("username","");

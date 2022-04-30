@@ -19,9 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ExerciseActivity extends AppCompatActivity implements IView, View.OnClickListener{
-    TextView tvexname,tvlink,tvmessage;
+    TextView tvexname,tvlink,tvmessage,tvlevel;
     EditText etfeedback;
-    Button deleteExer,finish,finishdialog;
+    Button finish,finishdialog;
     RadioGroup radiogroup;
     RadioButton radiobutton1;
     SharedPreference sharedPref;
@@ -35,46 +35,22 @@ public class ExerciseActivity extends AppCompatActivity implements IView, View.O
         super.onCreate(savedInstanceState);
         this.presenter=new Presenter(this);
         setContentView(R.layout.activity_exercise);
-        deleteExer=findViewById(R.id.deleteExer);
+        tvlevel=findViewById(R.id.tvlevel);
         finish=findViewById(R.id.finishex);
         tvexname = findViewById(R.id.exname);
         tvlink=findViewById(R.id.tvlink);
         tvmessage=findViewById(R.id.tvmessage);
-        tvexname.setText(DataModel.exercises.get(getIntent().getIntExtra("EXSIZE",0)-1).getName());
-        tvlink.setText(DataModel.exercises.get(getIntent().getIntExtra("EXSIZE",0)-1).getDescription());
-        deleteExer.setOnClickListener(this);
+        int level1=DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().get(getIntent().getIntExtra("EXSIZE",0))%10;
+        int exercise=DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().get(getIntent().getIntExtra("EXSIZE",0))/10-1;
+        tvexname.setText(DataModel.exercises.get(exercise).getName());
+        tvlevel.setText("Level: "+(level1+1)+"  Ankle: "+DataModel.exercises.get(exercise).getLevels().get(level1));
+        tvlink.setText(DataModel.exercises.get(exercise).getDescription());
         finish.setOnClickListener(this);
 
     }
     @Override
     public void onClick(View view) {
-        if(view==deleteExer)
-        {
-            builder.setMessage("Do you want to delete the Exercise?")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            DataModel.exercises.remove(getIntent().getIntExtra("EXSIZE",0));
-                            DataModel.saveExercieses();
-                            Toast.makeText(getApplicationContext(), "Deleted",
-                                    Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(getApplicationContext(), ExercisesListActivity.class);
-                            startActivity(i);
-                            finish();
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            //  Action for 'NO' Button
-                            dialog.cancel();
-                            Toast.makeText(getApplicationContext(), "You canceled ",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            AlertDialog alert = builder.create();
-            alert.setTitle("Delete Exercise");
-            alert.show();
-        }
+
         if(view==finish)
         {
             OpenFeedbackdialog();
@@ -93,7 +69,7 @@ public class ExerciseActivity extends AppCompatActivity implements IView, View.O
             public void onClick(View view) {
                 if(view==finishdialog)
                 {
-                    DataModel.patients.get(sharedPref.GetFirebaseNum()).getFeedback().add(getIntent().getIntExtra("EXSIZE",0)+ etfeedback.getText().toString());
+                    DataModel.patients.get(sharedPref.GetFirebaseNum()).getFeedback().set(getIntent().getIntExtra("EXSIZE",0), etfeedback.getText().toString());
                     DataModel.savePatients();
                     feedbackDialog.dismiss();
                     restartapp();
@@ -118,17 +94,6 @@ public class ExerciseActivity extends AppCompatActivity implements IView, View.O
 
         item = menu.getItem(0);
         item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-        item = menu.getItem(1);
-        item.setEnabled(false);
-        item.setVisible(false);
-        item = menu.getItem(2);
-        item.setEnabled(false);
-        item.setVisible(false);
-        item = menu.getItem(5);
-        item.setEnabled(false);
-        item.setVisible(false);
-
         if (sharedPref.GetFname().equals("")) {
             item = menu.getItem(0);
             item.setEnabled(false);
@@ -146,16 +111,7 @@ public class ExerciseActivity extends AppCompatActivity implements IView, View.O
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_login) {
-            //Intent intent = new Intent(this, LoginActivity.class);
-            //startActivityForResult(intent, 0);
-            Toast.makeText(this,"You are already loged in",Toast.LENGTH_LONG).show();
-            return true;
-        } else if (id == R.id.action_register) {
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivityForResult(intent, 0);
-            return true;
-        } else if (id == R.id.action_Back) {
+         if (id == R.id.action_Back) {
             if(sharedPref.IsDoctor())
             {
                 Intent intent = new Intent(this, DoctorsPatientActivity.class);
@@ -164,8 +120,11 @@ public class ExerciseActivity extends AppCompatActivity implements IView, View.O
                 Intent intent = new Intent(this, ExercisesListActivity.class);
                 startActivity(intent);
             }
-
-        }else if (id == R.id.action_GoHome) {
+         }else if (id == R.id.action_SetTimer) {
+             Intent intent = new Intent(this, NotificationActivity.class);
+             startActivityForResult(intent, 0);
+             return true;
+         }else if (id == R.id.action_GoHome) {
 
             if(sharedPref.IsDoctor())
             {

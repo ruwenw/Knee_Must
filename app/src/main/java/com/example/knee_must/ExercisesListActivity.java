@@ -45,8 +45,8 @@ int x=0;
         }else{
             for (int i = 0 ; i < DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().size();i++)
             {
-                x=(DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().get(i))/10-1;
-                temp.add(DataModel.exercises.get(x).getName());
+                x=(DataModel.patients.get(sharedPref.GetFirebaseNum()).getExercises().get(i));
+                temp.add(DataModel.exercises.get(x/10-1).getName());
             }
             adapter=new MyListAdapter(this,temp);
             lvexr.setAdapter(adapter);
@@ -63,7 +63,7 @@ int x=0;
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent1 = new Intent(this, ExerciseActivity.class);
-        intent1.putExtra("EXSIZE", x+1);
+        intent1.putExtra("EXSIZE", i);
         startActivity(intent1);
         finish();
 
@@ -161,16 +161,6 @@ int x=0;
         item = menu.getItem(0);
         item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-        item = menu.getItem(1);
-        item.setEnabled(false);
-        item.setVisible(false);
-        item = menu.getItem(2);
-        item.setEnabled(false);
-        item.setVisible(false);
-        item = menu.getItem(5);
-        item.setEnabled(false);
-        item.setVisible(false);
-
         if (sharedPref.GetFname().equals("")) {
             item = menu.getItem(0);
             item.setEnabled(false);
@@ -188,17 +178,16 @@ int x=0;
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_login) {
-            //Intent intent = new Intent(this, LoginActivity.class);
-            //startActivityForResult(intent, 0);
-            Toast.makeText(this,"You are already loged in",Toast.LENGTH_LONG).show();
-            return true;
-        } else if (id == R.id.action_Back) {
+        if (id == R.id.action_Back) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivityForResult(intent, 0);
             return true;
-        } else if (id == R.id.action_register) {
-            Intent intent = new Intent(this, RegisterActivity.class);
+        }else if (id == R.id.action_CallDoc) {
+            Intent intent = new Intent(this, CallActivity.class);
+            startActivityForResult(intent, 0);
+            return true;
+        } else if (id == R.id.action_SetTimer) {
+            Intent intent = new Intent(this, NotificationActivity.class);
             startActivityForResult(intent, 0);
             return true;
         }else if (id == R.id.action_GoHome) {

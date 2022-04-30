@@ -7,9 +7,17 @@ public class
 Exercise {
     private String name;
     private String description;
-    private ArrayList<ExerciseLevel> levels;
+    private ArrayList<Integer> levels;
 
-    public Exercise(String name, String descriptionOfExercise,ArrayList<ExerciseLevel> levels) {
+    public ArrayList<Integer> getLevels() {
+        return levels;
+    }
+
+    public void setLevels(ArrayList<Integer> levels) {
+        this.levels = levels;
+    }
+
+    public Exercise(String name, String descriptionOfExercise, ArrayList<Integer> levels) {
         this.name = name;
         this.description = descriptionOfExercise;
         this.levels=levels;
